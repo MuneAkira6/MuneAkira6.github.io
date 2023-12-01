@@ -4,11 +4,36 @@
   
     
     <entry>
-      <title>献上自己</title>
-      <link href="/2023/11/30/test/"/>
-      <url>/2023/11/30/test/</url>
+      <title>杂学</title>
+      <link href="/2023/12/01/%E6%9D%82%E5%AD%A6/"/>
+      <url>/2023/12/01/%E6%9D%82%E5%AD%A6/</url>
       
-        <content type="html"><![CDATA[<h3 id="罗马书-12-1-2"><a href="#罗马书-12-1-2" class="headerlink" title="罗马书 12:1-2"></a>罗马书 12:1-2</h3><p><sup>1 </sup>所以弟兄们，我凭着神的仁慈劝你们，要把身体献上，作圣洁而蒙神悦纳的活祭；这是你们理所当然的事奉。</p><p><sup>2 </sup>不要模仿这个世代，倒要借着心意的更新而改变过来，使你们可以察验出甚么是神的旨意，就是察验出甚么是美好的、蒙他悦纳的和完全的事。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="下载-bili-tv"><a href="#下载-bili-tv" class="headerlink" title="下载 bili.tv"></a>下载 bili.tv</h2><ol><li>泰国 vpn，比如 urban vpn</li><li></li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yt-dlp --cookies cookies.txt --add-header <span class="string">&quot;Referer: https://www.bilibili.tv/&quot;</span> target_url</span><br></pre></td></tr></table></figure><h2 id="minyami"><a href="#minyami" class="headerlink" title="minyami"></a>minyami</h2><ol><li>带 cookies</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minyami --headers <span class="string">&quot;Referer: https://www.bilibili.tv/&quot;</span> -H <span class="string">&quot;Cookie:cookies_text&quot;</span> -d <span class="string">&quot;xxx.m3u8&quot;</span> --output <span class="string">&quot;xxx.ts&quot;</span></span><br></pre></td></tr></table></figure><ol start="2"><li>设置代理<br>不要使用环境变量，直接开启代理软件的 TUN 模式（增强模式）</li></ol><h2 id="yt-dlp"><a href="#yt-dlp" class="headerlink" title="yt-dlp"></a>yt-dlp</h2><ul><li>从文件读取 <code>-a </code></li><li>获取所有可用轨道 <code>-F</code></li><li>选中轨道 <code>-f</code></li><li><code>--cookies cookies.txt</code> <code>--cookies-from-browser edge</code></li><li><strong>abema.tv</strong>: 不使用cookie，直接带用户名和密码 <code>yt-dlp &#39;https://abema.tv/video/episode/xxx&#39; --username &#39;xxx&#39; --password &#39;xxx&#39;</code> 如果报错就清空 <code>/.cache/yt-dlp</code></li></ul><h2 id="handbrake-压缩常用配置"><a href="#handbrake-压缩常用配置" class="headerlink" title="handbrake 压缩常用配置"></a>handbrake 压缩常用配置</h2><p>Mac mini M2</p><ul><li>mkv</li><li>h265</li><li>RF: 18</li><li>帧率：与原视频相同 恒定帧率（cfr）</li><li>预设：medium</li><li>音频比特率：passthru&#x2F;256</li><li>VideoToolbox：Mac上可硬件加速，但质量一般。</li></ul><h2 id="webm-to-m4a-lossless"><a href="#webm-to-m4a-lossless" class="headerlink" title="webm to m4a lossless"></a>webm to m4a lossless</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.webm -c:a alac output.m4a</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Others </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Pseudo-tech </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>献上自己</title>
+      <link href="/2023/12/01/Bible/"/>
+      <url>/2023/12/01/Bible/</url>
+      
+        <content type="html"><![CDATA[<h3 id="罗马书-12-1-2"><a href="#罗马书-12-1-2" class="headerlink" title="罗马书 12:1-2"></a>罗马书 12:1-2</h3><p><sup>1 </sup>所以弟兄们，我凭着神的仁慈劝你们，要把身体献上，作圣洁而蒙神悦纳的活祭；这是你们理所当然的事奉。</p><p><sup>2 </sup>不要模仿这个世代，倒要借着心意的更新而改变过来，使你们可以察验出甚么是神的旨意，就是察验出甚么是美好的、蒙他悦纳的和完全的事。</p><h3 id="诗篇-16-7-11"><a href="#诗篇-16-7-11" class="headerlink" title="诗篇 16:7-11"></a>诗篇 16:7-11</h3><p><sup>7 </sup>我必称颂那指教我的耶和华；<br>我的心肠在夜间也警戒我。<br><sup>8 </sup>我将耶和华常摆在我面前，<br>因他在我右边，我便不致摇动。</p><p><sup>9 </sup>因此，我的心欢喜，我的灵快乐；<br>我的肉身也要安然居住。<br><sup>10 </sup>因为你必不将我的灵魂撇在阴间，<br>也不叫你的圣者见朽坏。</p><p><sup>11 </sup>你必将生命的道路指示我。<br>在你面前有满足的喜乐；<br>在你右手中有永远的福乐。</p><h3 id="民数记-6-24-26"><a href="#民数记-6-24-26" class="headerlink" title="民数记 6:24-26"></a>民数记 6:24-26</h3><p><sup>24 </sup>『愿耶和华赐福给你，保护你。 <sup>25 </sup>愿耶和华使他的脸光照你，赐恩给你。 <sup>26 </sup>愿耶和华向你仰脸，赐你平安。』</p><h3 id="约翰一书-4-18"><a href="#约翰一书-4-18" class="headerlink" title="约翰一书 4:18"></a>约翰一书 4:18</h3><p><sup>18 </sup>在爱里没有惧怕；完满的爱把惧怕驱逐出去，因为惧怕里含着惩罚，惧怕的人在爱里尚未得到完满。</p><h3 id="诗篇-119-1-2"><a href="#诗篇-119-1-2" class="headerlink" title="诗篇 119:1-2"></a>诗篇 119:1-2</h3><p><sup>1 </sup>行为正直、遵行耶和华律法的，<br>这人有福了！<br><sup>2 </sup>遵守他的法度、一心寻求他的，<br>这人有福了！</p>]]></content>
       
       
       <categories>
@@ -23,19 +48,6 @@
             <tag> Bible </tag>
             
         </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Hello World</title>
-      <link href="/2023/11/30/hello-world/"/>
-      <url>/2023/11/30/hello-world/</url>
-      
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
-      
-      
       
     </entry>
     
