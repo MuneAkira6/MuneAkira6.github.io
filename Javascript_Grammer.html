@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="google-site-verification" content="Kd5i9xsNaiKCLKdHxNrx0RIUXBczfd2VxycDTU5Pp28" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="ES61. 解构与改名1const &#123; a: a1 &#125; &#x3D; obj;  2. 数组去重1const c &#x3D; [...new Set([...a, ...b])];  3. 数组扁平化1arr.flat(Infinity);  4. ?? or ||?? 仅在左侧为 null, undefined 时跳到右侧|| 为 0, &#39;&#39;, NaN, null, undef">
+<meta property="og:type" content="article">
+<meta property="og:title" content="语法拾贝 (Reloaded)">
+<meta property="og:url" content="https://muneakira6.github.io/Javascript_Grammer.html">
+<meta property="og:site_name" content="Henceforth 🌱　🍑　🐈">
+<meta property="og:description" content="ES61. 解构与改名1const &#123; a: a1 &#125; &#x3D; obj;  2. 数组去重1const c &#x3D; [...new Set([...a, ...b])];  3. 数组扁平化1arr.flat(Infinity);  4. ?? or ||?? 仅在左侧为 null, undefined 时跳到右侧|| 为 0, &#39;&#39;, NaN, null, undef">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-12-04T08:24:56.000Z">
+<meta property="article:modified_time" content="2023-12-04T14:36:43.029Z">
+<meta property="article:author" content="Mune Akira">
+<meta property="article:tag" content="Grammer">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/Image_ruby.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/Image_ruby.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/Image_ruby.png">
+        
+      
+    
+    <!-- title -->
+    <title>语法拾贝 (Reloaded)</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">カテゴリ</a></li><!--
+     --><!--
+       --><li><a href="/search/">探す</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/Japanese_Grammer.html"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muneakira6.github.io/Javascript_Grammer.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muneakira6.github.io/Javascript_Grammer.html&text=语法拾贝 (Reloaded)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muneakira6.github.io/Javascript_Grammer.html&title=语法拾贝 (Reloaded)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muneakira6.github.io/Javascript_Grammer.html&is_video=false&description=语法拾贝 (Reloaded)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=语法拾贝 (Reloaded)&body=Check out this article: https://muneakira6.github.io/Javascript_Grammer.html"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muneakira6.github.io/Javascript_Grammer.html&title=语法拾贝 (Reloaded)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muneakira6.github.io/Javascript_Grammer.html&title=语法拾贝 (Reloaded)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muneakira6.github.io/Javascript_Grammer.html&title=语法拾贝 (Reloaded)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muneakira6.github.io/Javascript_Grammer.html&title=语法拾贝 (Reloaded)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muneakira6.github.io/Javascript_Grammer.html&name=语法拾贝 (Reloaded)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muneakira6.github.io/Javascript_Grammer.html&t=语法拾贝 (Reloaded)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ES6"><span class="toc-number">1.</span> <span class="toc-text">ES6</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%A7%A3%E6%9E%84%E4%B8%8E%E6%94%B9%E5%90%8D"><span class="toc-number">1.1.</span> <span class="toc-text">1. 解构与改名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D"><span class="toc-number">1.2.</span> <span class="toc-text">2. 数组去重</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96"><span class="toc-number">1.3.</span> <span class="toc-text">3. 数组扁平化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-or"><span class="toc-number">1.4.</span> <span class="toc-text">4. ?? or ||</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#typescript"><span class="toc-number">2.</span> <span class="toc-text">typescript</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-void"><span class="toc-number">2.1.</span> <span class="toc-text">1. void</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%9D%9E%E7%A9%BA%E6%96%AD%E8%A8%80"><span class="toc-number">2.2.</span> <span class="toc-text">2. 非空断言 !</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%94%AE%E5%80%BC%E8%8E%B7%E5%8F%96-keyof"><span class="toc-number">2.3.</span> <span class="toc-text">3. 键值获取 keyof</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Partial"><span class="toc-number">2.4.</span> <span class="toc-text">Partial</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Required"><span class="toc-number">2.5.</span> <span class="toc-text">Required</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Record"><span class="toc-number">2.6.</span> <span class="toc-text">Record&lt;K, T&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pick"><span class="toc-number">2.7.</span> <span class="toc-text">Pick&lt;T, K&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Omit"><span class="toc-number">2.8.</span> <span class="toc-text">Omit&lt;T, K&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%A3%B0%E6%98%8E%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BB%84%E4%BB%B6"><span class="toc-number">2.9.</span> <span class="toc-text">1. 声明函数式组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8-typeof-%E5%87%8F%E5%B0%91%E5%86%97%E4%BD%99%E7%9A%84-props-%E7%B1%BB%E5%9E%8B%E5%AF%BC%E5%87%BA"><span class="toc-number">2.10.</span> <span class="toc-text">2. 使用 typeof 减少冗余的 props 类型导出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.11.</span> <span class="toc-text">3. 事件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Trick"><span class="toc-number">3.</span> <span class="toc-text">Trick</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#if-%E6%9D%A1%E4%BB%B6%E5%A4%AA%E9%95%BF%E6%97%B6"><span class="toc-number">3.1.</span> <span class="toc-text">if 条件太长时</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        语法拾贝 (Reloaded)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Mune Akira</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-12-04T08:24:56.000Z" class="dt-published" itemprop="datePublished">2023-12-04</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/JavaScript/">JavaScript</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Grammer/" rel="tag">Grammer</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="ES6"><a href="#ES6" class="headerlink" title="ES6"></a>ES6</h2><h3 id="1-解构与改名"><a href="#1-解构与改名" class="headerlink" title="1. 解构与改名"></a>1. 解构与改名</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; <span class="attr">a</span>: a1 &#125; = obj;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-数组去重"><a href="#2-数组去重" class="headerlink" title="2. 数组去重"></a>2. 数组去重</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> c = [...<span class="keyword">new</span> <span class="title class_">Set</span>([...a, ...b])];</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-数组扁平化"><a href="#3-数组扁平化" class="headerlink" title="3. 数组扁平化"></a>3. 数组扁平化</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr.<span class="title function_">flat</span>(<span class="title class_">Infinity</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-or"><a href="#4-or" class="headerlink" title="4. ?? or ||"></a>4. ?? or ||</h3><p><code>??</code> 仅在左侧为 <code>null</code>, <code>undefined</code> 时跳到右侧<br><code>||</code> 为 <code>0</code>, <code>&#39;&#39;</code>, <code>NaN</code>, <code>null</code>, <code>undefined</code>（这五个称为假值）</p>
+<p>* <code>[]</code> <code>&#123;&#125;</code> 的值为 <code>true</code></p>
+<h2 id="typescript"><a href="#typescript" class="headerlink" title="typescript"></a>typescript</h2><p><strong>一、操作符</strong></p>
+<h3 id="1-void"><a href="#1-void" class="headerlink" title="1. void"></a>1. void</h3><p>作为函数返回值类型，表示不关注返回值类型，可以是任意值</p>
+<h3 id="2-非空断言"><a href="#2-非空断言" class="headerlink" title="2. 非空断言 !"></a>2. 非空断言 !</h3><h3 id="3-键值获取-keyof"><a href="#3-键值获取-keyof" class="headerlink" title="3. 键值获取 keyof"></a>3. 键值获取 keyof</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">type <span class="title class_">Person</span> = &#123;</span><br><span class="line">  <span class="attr">name</span>: string;</span><br><span class="line">  <span class="attr">age</span>: number;</span><br><span class="line">&#125;</span><br><span class="line">type <span class="title class_">PersonKey</span> = keyof <span class="title class_">Person</span>;  <span class="comment">// &#x27;name&#x27; | &#x27;age&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>使用场景：任意定义一个 key 变量去对象里取 value 时，通常会不允许取。故需要手动指定。</strong><br><strong>那如果无法获取显式目标对象的类型时？keyof typeof</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type <span class="title class_">PersonKey</span> = keyof <span class="keyword">typeof</span> me;   <span class="comment">// &#x27;name&#x27; | &#x27;age&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>二、泛型工具</strong></p>
+<h3 id="Partial"><a href="#Partial" class="headerlink" title="Partial"></a>Partial<T></h3><p>将泛型中全部属性变为可选的。</p>
+<h3 id="Required"><a href="#Required" class="headerlink" title="Required"></a>Required<T></h3><p>将泛型中全部属性变为必选的。</p>
+<h3 id="Record"><a href="#Record" class="headerlink" title="Record&lt;K, T&gt;"></a>Record&lt;K, T&gt;</h3><p>常用于定义对象。 <code>Record&lt;string, unknown&gt;</code></p>
+<h3 id="Pick"><a href="#Pick" class="headerlink" title="Pick&lt;T, K&gt;"></a>Pick&lt;T, K&gt;</h3><p>取键值对。<br><code>Pick&lt;Animal, &quot;name&quot; | &quot;age&quot;&gt;</code></p>
+<h3 id="Omit"><a href="#Omit" class="headerlink" title="Omit&lt;T, K&gt;"></a>Omit&lt;T, K&gt;</h3><p>去键值对。<br><code>Omit&lt;Animal, &#39;name&#39;|&#39;age&#39;&gt;</code></p>
+<p><strong>三、Work with React</strong></p>
+<h3 id="1-声明函数式组件"><a href="#1-声明函数式组件" class="headerlink" title="1. 声明函数式组件"></a>1. 声明函数式组件</h3><p>这种方式会显示声明 children</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">App</span>: <span class="title class_">React</span>.<span class="property">FC</span>&lt;<span class="title class_">AppProps</span>&gt; = <span class="function">(<span class="params">&#123; message, children &#125;</span>) =&gt;</span> (</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    &#123;message&#125;</span></span><br><span class="line"><span class="language-xml">    &#123;children&#125;</span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-使用-typeof-减少冗余的-props-类型导出"><a href="#2-使用-typeof-减少冗余的-props-类型导出" class="headerlink" title="2. 使用 typeof 减少冗余的 props 类型导出"></a>2. 使用 typeof 减少冗余的 props 类型导出</h3><h3 id="3-事件"><a href="#3-事件" class="headerlink" title="3. 事件"></a>3. 事件</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">type <span class="title class_">Props</span> = &#123;</span><br><span class="line">  <span class="attr">onClick</span>: <span class="function">(<span class="params">event: React.MouseEvent&lt;HTMLInputElement&gt;</span>) =&gt;</span> <span class="keyword">void</span></span><br><span class="line">  <span class="attr">onChange</span>: <span class="function">(<span class="params">event: React.ChangeEvent&lt;HTMLInputElement&gt;</span>) =&gt;</span> <span class="keyword">void</span></span><br><span class="line">  <span class="attr">onkeypress</span>: <span class="function">(<span class="params">event: React.KeyboardEvent&lt;HTMLInputElement&gt;</span>) =&gt;</span> <span class="keyword">void</span></span><br><span class="line">  <span class="attr">onBlur</span>: <span class="function">(<span class="params">event: React.FocusEvent&lt;HTMLInputElement&gt;</span>) =&gt;</span> <span class="keyword">void</span></span><br><span class="line">  <span class="attr">onFocus</span>: <span class="function">(<span class="params">event: React.FocusEvent&lt;HTMLInputElement&gt;</span>) =&gt;</span> <span class="keyword">void</span></span><br><span class="line">  <span class="attr">onSubmit</span>: <span class="function">(<span class="params">event: React.FormEvent&lt;HTMLFormElement&gt;</span>) =&gt;</span> <span class="keyword">void</span></span><br><span class="line">  <span class="attr">onClickDiv</span>: <span class="function">(<span class="params">event: React.MouseEvent&lt;HTMLDivElement, MouseEvent&gt;</span>) =&gt;</span> <span class="keyword">void</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对应的 handler 类型</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">type <span class="title class_">ChangeEventHandler</span>&lt;T = <span class="title class_">Element</span>&gt; = <span class="title class_">EventHandler</span>&lt;<span class="title class_">React</span>.<span class="property">ChangeEvent</span>&lt;T&gt;&gt;</span><br><span class="line"></span><br><span class="line">type <span class="title class_">KeyboardEventHandler</span>&lt;T = <span class="title class_">Element</span>&gt; = <span class="title class_">EventHandler</span>&lt;<span class="title class_">React</span>.<span class="property">KeyboardEvent</span>&lt;T&gt;&gt;</span><br><span class="line"></span><br><span class="line">type <span class="title class_">MouseEventHandler</span>&lt;T = <span class="title class_">Element</span>&gt; = <span class="title class_">EventHandler</span>&lt;<span class="title class_">React</span>.<span class="property">MouseEvent</span>&lt;T&gt;&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Trick"><a href="#Trick" class="headerlink" title="Trick"></a>Trick</h2><h3 id="if-条件太长时"><a href="#if-条件太长时" class="headerlink" title="if 条件太长时"></a>if 条件太长时</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(</span><br><span class="line">    type == <span class="number">1</span> ||</span><br><span class="line">    type == <span class="number">2</span> ||</span><br><span class="line">    type == <span class="number">3</span> ||</span><br><span class="line">    type == <span class="number">4</span> ||</span><br><span class="line">)&#123;</span><br><span class="line">   <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>↓</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> condition = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="keyword">if</span> (condition.<span class="title function_">includes</span>(type)) &#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/tags/">Tag</a></li>
+        
+          <li><a href="/categories/">カテゴリ</a></li>
+        
+          <li><a href="/search/">探す</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ES6"><span class="toc-number">1.</span> <span class="toc-text">ES6</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%A7%A3%E6%9E%84%E4%B8%8E%E6%94%B9%E5%90%8D"><span class="toc-number">1.1.</span> <span class="toc-text">1. 解构与改名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D"><span class="toc-number">1.2.</span> <span class="toc-text">2. 数组去重</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96"><span class="toc-number">1.3.</span> <span class="toc-text">3. 数组扁平化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-or"><span class="toc-number">1.4.</span> <span class="toc-text">4. ?? or ||</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#typescript"><span class="toc-number">2.</span> <span class="toc-text">typescript</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-void"><span class="toc-number">2.1.</span> <span class="toc-text">1. void</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%9D%9E%E7%A9%BA%E6%96%AD%E8%A8%80"><span class="toc-number">2.2.</span> <span class="toc-text">2. 非空断言 !</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%94%AE%E5%80%BC%E8%8E%B7%E5%8F%96-keyof"><span class="toc-number">2.3.</span> <span class="toc-text">3. 键值获取 keyof</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Partial"><span class="toc-number">2.4.</span> <span class="toc-text">Partial</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Required"><span class="toc-number">2.5.</span> <span class="toc-text">Required</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Record"><span class="toc-number">2.6.</span> <span class="toc-text">Record&lt;K, T&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pick"><span class="toc-number">2.7.</span> <span class="toc-text">Pick&lt;T, K&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Omit"><span class="toc-number">2.8.</span> <span class="toc-text">Omit&lt;T, K&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%A3%B0%E6%98%8E%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BB%84%E4%BB%B6"><span class="toc-number">2.9.</span> <span class="toc-text">1. 声明函数式组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8-typeof-%E5%87%8F%E5%B0%91%E5%86%97%E4%BD%99%E7%9A%84-props-%E7%B1%BB%E5%9E%8B%E5%AF%BC%E5%87%BA"><span class="toc-number">2.10.</span> <span class="toc-text">2. 使用 typeof 减少冗余的 props 类型导出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.11.</span> <span class="toc-text">3. 事件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Trick"><span class="toc-number">3.</span> <span class="toc-text">Trick</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#if-%E6%9D%A1%E4%BB%B6%E5%A4%AA%E9%95%BF%E6%97%B6"><span class="toc-number">3.1.</span> <span class="toc-text">if 条件太长时</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muneakira6.github.io/Javascript_Grammer.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muneakira6.github.io/Javascript_Grammer.html&text=语法拾贝 (Reloaded)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muneakira6.github.io/Javascript_Grammer.html&title=语法拾贝 (Reloaded)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muneakira6.github.io/Javascript_Grammer.html&is_video=false&description=语法拾贝 (Reloaded)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=语法拾贝 (Reloaded)&body=Check out this article: https://muneakira6.github.io/Javascript_Grammer.html"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muneakira6.github.io/Javascript_Grammer.html&title=语法拾贝 (Reloaded)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muneakira6.github.io/Javascript_Grammer.html&title=语法拾贝 (Reloaded)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muneakira6.github.io/Javascript_Grammer.html&title=语法拾贝 (Reloaded)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muneakira6.github.io/Javascript_Grammer.html&title=语法拾贝 (Reloaded)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muneakira6.github.io/Javascript_Grammer.html&name=语法拾贝 (Reloaded)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muneakira6.github.io/Javascript_Grammer.html&t=语法拾贝 (Reloaded)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    Mune Akira
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tag</a></li><!--
+     --><!--
+       --><li><a href="/categories/">カテゴリ</a></li><!--
+     --><!--
+       --><li><a href="/search/">探す</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
