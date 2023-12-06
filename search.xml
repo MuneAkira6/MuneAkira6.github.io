@@ -4,56 +4,6 @@
   
     
     <entry>
-      <title>杂学</title>
-      <link href="/%E6%9D%82%E5%AD%A6.html"/>
-      <url>/%E6%9D%82%E5%AD%A6.html</url>
-      
-        <content type="html"><![CDATA[<h2 id="Videos"><a href="#Videos" class="headerlink" title="Videos"></a>Videos</h2><h3 id="yt-dlp"><a href="#yt-dlp" class="headerlink" title="yt-dlp"></a>yt-dlp</h3><ul><li>从文件读取 <code>-a</code></li><li>获取所有可用轨道 <code>-F</code></li><li>选中轨道 <code>-f</code></li><li><code>--cookies cookies.txt</code> <code>--cookies-from-browser edge</code></li><li><strong>abema.tv</strong>: 不使用cookie，直接带用户名和密码 <code>yt-dlp &#39;https://abema.tv/video/episode/xxx&#39; --username &#39;xxx&#39; --password &#39;xxx&#39;</code> 如果报错就清空 <code>/.cache/yt-dlp</code></li></ul><h3 id="下载-bili-tv"><a href="#下载-bili-tv" class="headerlink" title="下载 bili.tv"></a>下载 bili.tv</h3><ol><li>泰国 vpn，比如 urban vpn</li><li></li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yt-dlp --cookies cookies.txt --add-header <span class="string">&quot;Referer: https://www.bilibili.tv/&quot;</span> target_url</span><br></pre></td></tr></table></figure><h3 id="minyami"><a href="#minyami" class="headerlink" title="minyami"></a>minyami</h3><ol><li>带 cookies</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minyami --headers <span class="string">&quot;Referer: https://www.bilibili.tv/&quot;</span> -H <span class="string">&quot;Cookie:cookies_text&quot;</span> -d <span class="string">&quot;xxx.m3u8&quot;</span> --output <span class="string">&quot;xxx.ts&quot;</span></span><br></pre></td></tr></table></figure><ol start="2"><li>设置代理<br>不要使用环境变量，直接开启代理软件的 TUN 模式（增强模式）</li></ol><h3 id="handbrake-压缩常用配置"><a href="#handbrake-压缩常用配置" class="headerlink" title="handbrake 压缩常用配置"></a>handbrake 压缩常用配置</h3><p>Mac mini M2</p><ul><li>mkv</li><li>h265</li><li>RF: 18</li><li>帧率：与原视频相同 恒定帧率（cfr）</li><li>预设：medium</li><li>音频比特率：passthru&#x2F;256</li><li>VideoToolbox：Mac上可硬件加速，但质量一般。</li></ul><h3 id="webm-to-m4a-lossless"><a href="#webm-to-m4a-lossless" class="headerlink" title="webm to m4a lossless"></a>webm to m4a lossless</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.webm -c:a alac output.m4a</span><br></pre></td></tr></table></figure><h2 id="Comics"><a href="#Comics" class="headerlink" title="Comics"></a>Comics</h2><h3 id="epub-to-zip"><a href="#epub-to-zip" class="headerlink" title="epub to zip"></a>epub to zip</h3><ol><li>epub → docx (Calibre)</li><li>打开，随便删除一个文字</li><li>重命名为 zip，解压找到 media 文件夹</li></ol><h2 id="Start-with-Mac-mini-M2"><a href="#Start-with-Mac-mini-M2" class="headerlink" title="Start with Mac mini M2"></a>Start with Mac mini M2</h2><h3 id="dock-在全屏时不自动隐藏"><a href="#dock-在全屏时不自动隐藏" class="headerlink" title="dock 在全屏时不自动隐藏"></a>dock 在全屏时不自动隐藏</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.dock autohide-delay -int 0</span><br><span class="line">defaults write com.apple.dock autohide-time-modifier -<span class="built_in">float</span> 1.0</span><br><span class="line">killall Dock</span><br></pre></td></tr></table></figure><h3 id="连接蓝牙耳机卡顿"><a href="#连接蓝牙耳机卡顿" class="headerlink" title="连接蓝牙耳机卡顿"></a>连接蓝牙耳机卡顿</h3><ol><li>耳机断联</li><li><code>sudo defaults write bluetoothaudiod &quot;Enable AAC codec&quot; -bool true</code></li><li>设置→声音→输入，取消选中耳机</li></ol><h3 id="睡眠时异常唤醒硬盘"><a href="#睡眠时异常唤醒硬盘" class="headerlink" title="睡眠时异常唤醒硬盘"></a>睡眠时异常唤醒硬盘</h3><ol><li>查询电源设置</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pmset -g</span><br></pre></td></tr></table></figure><ol start="2"><li>修改某个选项</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo pmset -a tcpkeepalive 0</span><br><span class="line">sudo pmset -a powernap 0 <span class="comment"># Apple 芯片的 Mac 上，此值默认为 1</span></span><br></pre></td></tr></table></figure><ol start="3"><li>It should be like this:</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">System-wide power settings:</span><br><span class="line">Currently <span class="keyword">in</span> use:</span><br><span class="line">  disksleep            10</span><br><span class="line">  powernap             0</span><br><span class="line">  womp                 1</span><br><span class="line">  networkoversleep     0</span><br><span class="line">  <span class="built_in">sleep</span>                1 (<span class="built_in">sleep</span> prevented by powerd, mds_stores)</span><br><span class="line">  Sleep On Power Button 1</span><br><span class="line">  ttyskeepawake        1</span><br><span class="line">  tcpkeepalive         0</span><br><span class="line">  autorestart          0</span><br><span class="line">  standby              0</span><br><span class="line">  displaysleep         10</span><br></pre></td></tr></table></figure><h3 id="Kill-Microsoft-AutoUpdate"><a href="#Kill-Microsoft-AutoUpdate" class="headerlink" title="Kill Microsoft AutoUpdate"></a>Kill Microsoft AutoUpdate</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Library/Application Support/Microsoft/</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> Tech </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Pseudo-tech </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>语法拾贝</title>
-      <link href="/Japanese_Grammer.html"/>
-      <url>/Japanese_Grammer.html</url>
-      
-        <content type="html"><![CDATA[<p>曖昧な言い方はやめよう。</p><h2 id="そう"><a href="#そう" class="headerlink" title="そう"></a>そう</h2><p>動詞連用形＋そう→推量<br>形容詞ーい&#x2F;な＋そう→推量（* 語幹使用唯一）<br>動詞辞書形＋そう→伝聞</p><ul><li>楽しそう。</li><li>ありそう。</li><li>だそうです。</li><li>今日雨が降りそうです。</li></ul><h2 id="でしょう-だろう"><a href="#でしょう-だろう" class="headerlink" title="でしょう&#x2F;だろう"></a>でしょう&#x2F;だろう</h2><p>〜んです<br>〜（原型）でしょう&#x2F;だろう</p><ul><li>いくらでしょう？</li></ul><h2 id="動詞体操"><a href="#動詞体操" class="headerlink" title="動詞体操"></a>動詞体操</h2><table><thead><tr><th>原形</th><th>连用形</th><th>可能性</th><th>假设形</th><th>命令形</th><th>意向形</th><th>被动形</th><th>使动形</th><th>て形&#x2F;た形</th></tr></thead><tbody><tr><td>書く</td><td>書き</td><td>書ける</td><td>書けば</td><td>書け</td><td>書こう</td><td>書かれる</td><td>書かせる</td><td></td></tr><tr><td>食べる</td><td>食べ</td><td>食べられる</td><td>食べれば</td><td>食べろ&#x2F;食べよ</td><td>食べよう</td><td>食べられる</td><td>食べさせる</td><td></td></tr><tr><td>する</td><td>し</td><td>できる</td><td>すれば</td><td>しろ&#x2F;せよ</td><td>しよう</td><td>される</td><td>させる</td><td></td></tr><tr><td>くる</td><td>き</td><td>こられる</td><td>くれば</td><td>こい</td><td>こよう</td><td>こられる</td><td>こさせる</td><td>きて</td></tr><tr><td>いく</td><td>いき</td><td>いける</td><td>いけば</td><td>いけ</td><td>いこう</td><td>いかれる</td><td>いかせる</td><td>いって</td></tr></tbody></table><ul><li>私は彼に食べられる。</li><li>私は彼にリンゴを食べさせる。（I make him eat apple.）</li><li>私は彼にリンゴを食べさせられる。（I am made to eat apple by him.）</li></ul><h2 id="ただ？たった？"><a href="#ただ？たった？" class="headerlink" title="ただ？たった？"></a>ただ？たった？</h2><p>ただ→無料（free）&#x2F;只（just）&#x2F;but（* 常用）<br>たった→only（わずか）（* 只强调数量）</p><ul><li>ただで飲めますよ。</li><li>私はただの学生です。</li><li>この作品美しいですが、ただ、値段がちょっと…</li><li>たった一人しかいないの。</li></ul><p>ただいま＝たったいま</p><h2 id="に？で？"><a href="#に？で？" class="headerlink" title="に？で？"></a>に？で？</h2><p>どっちも良い。「に」は動詞の終点。</p><p>に→移动、到达、存在于某处<br>で→（略）</p><ul><li>ここでお茶を飲む。</li><li>ここにあります。</li><li>学校に行く。</li></ul><h2 id="常见敬语"><a href="#常见敬语" class="headerlink" title="常见敬语"></a>常见敬语</h2><h3 id="1-〜させていただきます"><a href="#1-〜させていただきます" class="headerlink" title="1. 〜させていただきます"></a>1. 〜させていただきます</h3><p>いただく 乃 もらう 的敬语体。“请允许<strong>我</strong>做某事”。</p><ul><li>応募させていただきます。</li></ul><h3 id="2-〜いただきます"><a href="#2-〜いただきます" class="headerlink" title="2. 〜いただきます"></a>2. 〜いただきます</h3><p>思考：〜て＋もらう（请别人为<strong>我</strong>做某事） &#x2F; 〜もらう（我接受<strong>别人</strong>做某事）<br>再思考：〜てもらう &#x2F; 〜てくれる &#x2F; 〜あげる　→（敬語） 〜ていただく &#x2F; 〜てくださる &#x2F; 〜てさしあげる</p><ul><li>応募いただきます。</li><li>やめてもらいませんか。</li><li>ご案内してくださった方には感謝。</li><li>質問を答えていただけますか。</li></ul>]]></content>
-      
-      
-      <categories>
-          
-          <category> Japanese </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Grammer </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>MyGO!!!!!愛を語る</title>
       <link href="/MyGO!!!!!.html"/>
       <url>/MyGO!!!!!.html</url>
@@ -104,11 +54,61 @@
     
     
     <entry>
+      <title>语法拾贝</title>
+      <link href="/Japanese_Grammer.html"/>
+      <url>/Japanese_Grammer.html</url>
+      
+        <content type="html"><![CDATA[<p>曖昧な言い方はやめよう。</p><h2 id="そう"><a href="#そう" class="headerlink" title="そう"></a>そう</h2><p>動詞連用形＋そう→推量<br>形容詞ーい&#x2F;な＋そう→推量（* 語幹使用唯一）<br>動詞辞書形＋そう→伝聞</p><ul><li>楽しそう。</li><li>ありそう。</li><li>だそうです。</li><li>今日雨が降りそうです。</li></ul><h2 id="でしょう-だろう"><a href="#でしょう-だろう" class="headerlink" title="でしょう&#x2F;だろう"></a>でしょう&#x2F;だろう</h2><p>〜んです<br>〜（原型）でしょう&#x2F;だろう</p><ul><li>いくらでしょう？</li></ul><h2 id="動詞体操"><a href="#動詞体操" class="headerlink" title="動詞体操"></a>動詞体操</h2><table><thead><tr><th>原形</th><th>连用形</th><th>可能性</th><th>假设形</th><th>命令形</th><th>意向形</th><th>被动形</th><th>使动形</th><th>て形&#x2F;た形</th></tr></thead><tbody><tr><td>書く</td><td>書き</td><td>書ける</td><td>書けば</td><td>書け</td><td>書こう</td><td>書かれる</td><td>書かせる</td><td></td></tr><tr><td>食べる</td><td>食べ</td><td>食べられる</td><td>食べれば</td><td>食べろ&#x2F;食べよ</td><td>食べよう</td><td>食べられる</td><td>食べさせる</td><td></td></tr><tr><td>する</td><td>し</td><td>できる</td><td>すれば</td><td>しろ&#x2F;せよ</td><td>しよう</td><td>される</td><td>させる</td><td></td></tr><tr><td>くる</td><td>き</td><td>こられる</td><td>くれば</td><td>こい</td><td>こよう</td><td>こられる</td><td>こさせる</td><td>きて</td></tr><tr><td>いく</td><td>いき</td><td>いける</td><td>いけば</td><td>いけ</td><td>いこう</td><td>いかれる</td><td>いかせる</td><td>いって</td></tr></tbody></table><ul><li>私は彼に食べられる。</li><li>私は彼にリンゴを食べさせる。（I make him eat apple.）</li><li>私は彼にリンゴを食べさせられる。（I am made to eat apple by him.）</li></ul><h2 id="ただ？たった？"><a href="#ただ？たった？" class="headerlink" title="ただ？たった？"></a>ただ？たった？</h2><p>ただ→無料（free）&#x2F;只（just）&#x2F;but（* 常用）<br>たった→only（わずか）（* 只强调数量）</p><ul><li>ただで飲めますよ。</li><li>私はただの学生です。</li><li>この作品美しいですが、ただ、値段がちょっと…</li><li>たった一人しかいないの。</li></ul><p>ただいま＝たったいま</p><h2 id="に？で？"><a href="#に？で？" class="headerlink" title="に？で？"></a>に？で？</h2><p>どっちも良い。「に」は動詞の終点。</p><p>に→移动、到达、存在于某处<br>で→（略）</p><ul><li>ここでお茶を飲む。</li><li>ここにあります。</li><li>学校に行く。</li></ul><h2 id="常见敬语"><a href="#常见敬语" class="headerlink" title="常见敬语"></a>常见敬语</h2><h3 id="1-〜させていただきます"><a href="#1-〜させていただきます" class="headerlink" title="1. 〜させていただきます"></a>1. 〜させていただきます</h3><p>いただく 乃 もらう 的敬语体。“请允许<strong>我</strong>做某事”。</p><ul><li>応募させていただきます。</li></ul><h3 id="2-〜いただきます"><a href="#2-〜いただきます" class="headerlink" title="2. 〜いただきます"></a>2. 〜いただきます</h3><p>思考：〜て＋もらう（请别人为<strong>我</strong>做某事） &#x2F; 〜もらう（我接受<strong>别人</strong>做某事）<br>再思考：〜てもらう &#x2F; 〜てくれる &#x2F; 〜あげる　→（敬語） 〜ていただく &#x2F; 〜てくださる &#x2F; 〜てさしあげる</p><ul><li>応募いただきます。</li><li>やめてもらいませんか。</li><li>ご案内してくださった方には感謝。</li><li>質問を答えていただけますか。</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Japanese </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Grammer </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>环境问题汇总</title>
       <link href="/environment.html"/>
       <url>/environment.html</url>
       
         <content type="html"><![CDATA[<p>折腾开发环境显然是一种对人生无益的活动。</p><h3 id="zshrc"><a href="#zshrc" class="headerlink" title=".zshrc"></a>.zshrc</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> NVM_DIR=<span class="string">&quot;<span class="variable">$HOME</span>/.nvm&quot;</span></span><br><span class="line">[ -s <span class="string">&quot;<span class="variable">$NVM_DIR</span>/nvm.sh&quot;</span> ] &amp;&amp; \. <span class="string">&quot;<span class="variable">$NVM_DIR</span>/nvm.sh&quot;</span>  <span class="comment"># This loads nvm</span></span><br><span class="line">[ -s <span class="string">&quot;<span class="variable">$NVM_DIR</span>/bash_completion&quot;</span> ] &amp;&amp; \. <span class="string">&quot;<span class="variable">$NVM_DIR</span>/bash_completion&quot;</span>  <span class="comment"># This loads nvm bash_completion</span></span><br><span class="line"><span class="built_in">export</span> PYENV_ROOT=<span class="string">&quot;<span class="variable">$HOME</span>/.pyenv&quot;</span></span><br><span class="line"><span class="built_in">command</span> -v pyenv &gt;/dev/null || <span class="built_in">export</span> PATH=<span class="string">&quot;<span class="variable">$PYENV_ROOT</span>/bin:<span class="variable">$PATH</span>&quot;</span></span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(pyenv init -)</span>&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动代理</span></span><br><span class="line"><span class="function"><span class="title">proxy</span></span> () &#123;</span><br><span class="line">  <span class="built_in">export</span> https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;HTTP Proxy on&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">proxy</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭代理</span></span><br><span class="line"><span class="function"><span class="title">noproxy</span></span> () &#123;</span><br><span class="line">  <span class="built_in">unset</span> http_proxy</span><br><span class="line">  <span class="built_in">unset</span> https_proxy</span><br><span class="line">  <span class="built_in">unset</span> all_proxy</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;HTTP Proxy off&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># yarn全局</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;<span class="variable">$PATH</span>:`yarn global bin`:<span class="variable">$HOME</span>/.config/yarn/global/node_modules/.bin&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure><h3 id="yarn-报错-on-Windows"><a href="#yarn-报错-on-Windows" class="headerlink" title="yarn 报错 on Windows"></a>yarn 报错 on Windows</h3><ol><li>管理员运行 PowerShell</li><li><code>set-ExecutionPolicy RemoteSigned</code>, “Yes”</li><li><code>get-ExecutionPolicy</code>, “Unrestricted”</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> Tech </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Pseudo-tech </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>杂学</title>
+      <link href="/%E6%9D%82%E5%AD%A6.html"/>
+      <url>/%E6%9D%82%E5%AD%A6.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="Videos"><a href="#Videos" class="headerlink" title="Videos"></a>Videos</h2><h3 id="yt-dlp"><a href="#yt-dlp" class="headerlink" title="yt-dlp"></a>yt-dlp</h3><ul><li>从文件读取 <code>-a</code></li><li>获取所有可用轨道 <code>-F</code></li><li>选中轨道 <code>-f</code></li><li><code>--cookies cookies.txt</code> <code>--cookies-from-browser edge</code></li><li><strong>abema.tv</strong>: 不使用cookie，直接带用户名和密码 <code>yt-dlp &#39;https://abema.tv/video/episode/xxx&#39; --username &#39;xxx&#39; --password &#39;xxx&#39;</code> 如果报错就清空 <code>/.cache/yt-dlp</code></li></ul><h3 id="下载-bili-tv"><a href="#下载-bili-tv" class="headerlink" title="下载 bili.tv"></a>下载 bili.tv</h3><ol><li>泰国 vpn，比如 urban vpn</li><li></li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yt-dlp --cookies cookies.txt --add-header <span class="string">&quot;Referer: https://www.bilibili.tv/&quot;</span> target_url</span><br></pre></td></tr></table></figure><h3 id="minyami"><a href="#minyami" class="headerlink" title="minyami"></a>minyami</h3><ol><li>带 cookies</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minyami --headers <span class="string">&quot;Referer: https://www.bilibili.tv/&quot;</span> -H <span class="string">&quot;Cookie:cookies_text&quot;</span> -d <span class="string">&quot;xxx.m3u8&quot;</span> --output <span class="string">&quot;xxx.ts&quot;</span></span><br></pre></td></tr></table></figure><ol start="2"><li>设置代理<br>不要使用环境变量，直接开启代理软件的 TUN 模式（增强模式）</li></ol><h3 id="handbrake-压缩常用配置"><a href="#handbrake-压缩常用配置" class="headerlink" title="handbrake 压缩常用配置"></a>handbrake 压缩常用配置</h3><p>Mac mini M2</p><ul><li>mkv</li><li>h265</li><li>RF: 18</li><li>帧率：与原视频相同 恒定帧率（cfr）</li><li>预设：medium</li><li>音频比特率：passthru&#x2F;256</li><li>VideoToolbox：Mac上可硬件加速，但质量一般。</li></ul><h3 id="webm-to-m4a-lossless"><a href="#webm-to-m4a-lossless" class="headerlink" title="webm to m4a lossless"></a>webm to m4a lossless</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.webm -c:a alac output.m4a</span><br></pre></td></tr></table></figure><h2 id="Comics"><a href="#Comics" class="headerlink" title="Comics"></a>Comics</h2><h3 id="epub-to-zip"><a href="#epub-to-zip" class="headerlink" title="epub to zip"></a>epub to zip</h3><ol><li>epub → docx (Calibre)</li><li>打开，随便删除一个文字</li><li>重命名为 zip，解压找到 media 文件夹</li></ol><h2 id="Start-with-Mac-mini-M2"><a href="#Start-with-Mac-mini-M2" class="headerlink" title="Start with Mac mini M2"></a>Start with Mac mini M2</h2><h3 id="dock-在全屏时不自动隐藏"><a href="#dock-在全屏时不自动隐藏" class="headerlink" title="dock 在全屏时不自动隐藏"></a>dock 在全屏时不自动隐藏</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.dock autohide-delay -int 0</span><br><span class="line">defaults write com.apple.dock autohide-time-modifier -<span class="built_in">float</span> 1.0</span><br><span class="line">killall Dock</span><br></pre></td></tr></table></figure><h3 id="连接蓝牙耳机卡顿"><a href="#连接蓝牙耳机卡顿" class="headerlink" title="连接蓝牙耳机卡顿"></a>连接蓝牙耳机卡顿</h3><ol><li>耳机断联</li><li><code>sudo defaults write bluetoothaudiod &quot;Enable AAC codec&quot; -bool true</code></li><li>设置→声音→输入，取消选中耳机</li></ol><h3 id="睡眠时异常唤醒硬盘"><a href="#睡眠时异常唤醒硬盘" class="headerlink" title="睡眠时异常唤醒硬盘"></a>睡眠时异常唤醒硬盘</h3><ol><li>查询电源设置</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pmset -g</span><br></pre></td></tr></table></figure><ol start="2"><li>修改某个选项</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo pmset -a tcpkeepalive 0</span><br><span class="line">sudo pmset -a powernap 0 <span class="comment"># Apple 芯片的 Mac 上，此值默认为 1</span></span><br></pre></td></tr></table></figure><ol start="3"><li>It should be like this:</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">System-wide power settings:</span><br><span class="line">Currently <span class="keyword">in</span> use:</span><br><span class="line">  disksleep            10</span><br><span class="line">  powernap             0</span><br><span class="line">  womp                 1</span><br><span class="line">  networkoversleep     0</span><br><span class="line">  <span class="built_in">sleep</span>                1 (<span class="built_in">sleep</span> prevented by powerd, mds_stores)</span><br><span class="line">  Sleep On Power Button 1</span><br><span class="line">  ttyskeepawake        1</span><br><span class="line">  tcpkeepalive         0</span><br><span class="line">  autorestart          0</span><br><span class="line">  standby              0</span><br><span class="line">  displaysleep         10</span><br></pre></td></tr></table></figure><h3 id="Kill-Microsoft-AutoUpdate"><a href="#Kill-Microsoft-AutoUpdate" class="headerlink" title="Kill Microsoft AutoUpdate"></a>Kill Microsoft AutoUpdate</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Library/Application Support/Microsoft/</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
