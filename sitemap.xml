@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">  <url>
+    <loc>https://muneakira6.github.io/Japanese_Grammer.html</loc>  <lastmod>2023-12-06</lastmod>  <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>  <url>
     <loc>https://muneakira6.github.io/MyGO!!!!!.html</loc>  <lastmod>2023-12-06</lastmod>  <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>  <url>
@@ -10,9 +13,6 @@
     <priority>0.6</priority>
   </url>  <url>
     <loc>https://muneakira6.github.io/Bible.html</loc>  <lastmod>2023-12-06</lastmod>  <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>  <url>
-    <loc>https://muneakira6.github.io/Japanese_Grammer.html</loc>  <lastmod>2023-12-06</lastmod>  <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>  <url>
     <loc>https://muneakira6.github.io/Javascript_Grammer.html</loc>  <lastmod>2023-12-05</lastmod>  <changefreq>monthly</changefreq>
@@ -55,12 +55,12 @@
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>  <url>
-    <loc>https://muneakira6.github.io/categories/JavaScript/</loc>
+    <loc>https://muneakira6.github.io/categories/Japanese/</loc>
     <lastmod>2023-12-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>  <url>
-    <loc>https://muneakira6.github.io/categories/Japanese/</loc>
+    <loc>https://muneakira6.github.io/categories/JavaScript/</loc>
     <lastmod>2023-12-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
