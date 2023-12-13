@@ -1,6 +1,6 @@
+https://muneakira6.github.io/Bible.html
 https://muneakira6.github.io/MyGO!!!!!.html
 https://muneakira6.github.io/%E6%9D%82%E5%AD%A6.html
-https://muneakira6.github.io/Bible.html
 https://muneakira6.github.io/MyGO!!!!!_Junrei.html
 https://muneakira6.github.io/Javascript_Grammer.html
 https://muneakira6.github.io/Japanese_Grammer.html
@@ -16,7 +16,7 @@ https://muneakira6.github.io/tags/MyGO/
 https://muneakira6.github.io/tags/%E5%B7%A1%E7%A4%BC/
 https://muneakira6.github.io/tags/Pseudo-tech/
 https://muneakira6.github.io/categories/Others/
-https://muneakira6.github.io/categories/Japanese/
-https://muneakira6.github.io/categories/%E3%82%A2%E3%83%8B%E3%83%A1/
 https://muneakira6.github.io/categories/JavaScript/
+https://muneakira6.github.io/categories/Japanese/
 https://muneakira6.github.io/categories/Tech/
+https://muneakira6.github.io/categories/%E3%82%A2%E3%83%8B%E3%83%A1/
