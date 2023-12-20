@@ -6,10 +6,10 @@
     <loc>https://muneakira6.github.io/MyGO!!!!!.html</loc>  <lastmod>2023-12-20</lastmod>  <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>  <url>
-    <loc>https://muneakira6.github.io/MyGO!!!!!_Junrei.html</loc>  <lastmod>2023-12-20</lastmod>  <changefreq>monthly</changefreq>
+    <loc>https://muneakira6.github.io/Javascript_Grammer.html</loc>  <lastmod>2023-12-20</lastmod>  <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>  <url>
-    <loc>https://muneakira6.github.io/Javascript_Grammer.html</loc>  <lastmod>2023-12-20</lastmod>  <changefreq>monthly</changefreq>
+    <loc>https://muneakira6.github.io/MyGO!!!!!_Junrei.html</loc>  <lastmod>2023-12-20</lastmod>  <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>  <url>
     <loc>https://muneakira6.github.io/Bible.html</loc>  <lastmod>2023-12-16</lastmod>  <changefreq>monthly</changefreq>
@@ -27,10 +27,10 @@
     <loc>https://muneakira6.github.io/about/index.html</loc>  <lastmod>2023-12-06</lastmod>  <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>  <url>
-    <loc>https://muneakira6.github.io/search/index.html</loc>  <lastmod>2023-11-30</lastmod>  <changefreq>monthly</changefreq>
+    <loc>https://muneakira6.github.io/categories/index.html</loc>  <lastmod>2023-11-30</lastmod>  <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>  <url>
-    <loc>https://muneakira6.github.io/categories/index.html</loc>  <lastmod>2023-11-30</lastmod>  <changefreq>monthly</changefreq>
+    <loc>https://muneakira6.github.io/search/index.html</loc>  <lastmod>2023-11-30</lastmod>  <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>  <url>
     <loc>https://muneakira6.github.io/tags/index.html</loc>  <lastmod>2023-11-30</lastmod>  <changefreq>monthly</changefreq>
@@ -56,11 +56,6 @@
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>  <url>
-    <loc>https://muneakira6.github.io/tags/%E5%B7%A1%E7%A4%BC/</loc>
-    <lastmod>2023-12-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>  <url>
     <loc>https://muneakira6.github.io/tags/Pseudo-tech/</loc>
     <lastmod>2023-12-20</lastmod>
     <changefreq>weekly</changefreq>
@@ -75,13 +70,18 @@
     <lastmod>2023-12-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
+  </url>  <url>
+    <loc>https://muneakira6.github.io/tags/%E5%B7%A1%E7%A4%BC/</loc>
+    <lastmod>2023-12-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>   <url>
     <loc>https://muneakira6.github.io/categories/Others/</loc>
     <lastmod>2023-12-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>  <url>
-    <loc>https://muneakira6.github.io/categories/Japanese/</loc>
+    <loc>https://muneakira6.github.io/categories/JavaScript/</loc>
     <lastmod>2023-12-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -96,7 +96,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>  <url>
-    <loc>https://muneakira6.github.io/categories/JavaScript/</loc>
+    <loc>https://muneakira6.github.io/categories/Japanese/</loc>
     <lastmod>2023-12-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
