@@ -42,13 +42,13 @@
     <loc>https://muneakira6.github.io/about/index.html</loc>  <lastmod>2023-12-06</lastmod>  <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>  <url>
-    <loc>https://muneakira6.github.io/search/index.html</loc>  <lastmod>2023-11-30</lastmod>  <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>  <url>
     <loc>https://muneakira6.github.io/categories/index.html</loc>  <lastmod>2023-11-30</lastmod>  <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>  <url>
     <loc>https://muneakira6.github.io/tags/index.html</loc>  <lastmod>2023-11-30</lastmod>  <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>  <url>
+    <loc>https://muneakira6.github.io/search/index.html</loc>  <lastmod>2023-11-30</lastmod>  <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>  <url>
     <loc>https://muneakira6.github.io/</loc>
@@ -121,17 +121,12 @@
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>  <url>
-    <loc>https://muneakira6.github.io/categories/JavaScript/</loc>
-    <lastmod>2024-03-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>  <url>
     <loc>https://muneakira6.github.io/categories/Japanese/</loc>
     <lastmod>2024-03-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>  <url>
-    <loc>https://muneakira6.github.io/categories/%E3%82%A2%E3%83%8B%E3%83%A1/</loc>
+    <loc>https://muneakira6.github.io/categories/JavaScript/</loc>
     <lastmod>2024-03-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -142,6 +137,11 @@
     <priority>0.2</priority>
   </url>  <url>
     <loc>https://muneakira6.github.io/categories/Tech/</loc>
+    <lastmod>2024-03-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>  <url>
+    <loc>https://muneakira6.github.io/categories/%E3%82%A2%E3%83%8B%E3%83%A1/</loc>
     <lastmod>2024-03-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
