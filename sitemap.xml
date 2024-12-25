@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">  <url>
-    <loc>https://muneakira6.github.io/2024.html</loc>  <lastmod>2024-12-24</lastmod>  <changefreq>monthly</changefreq>
+    <loc>https://muneakira6.github.io/2024.html</loc>  <lastmod>2024-12-25</lastmod>  <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>  <url>
     <loc>https://muneakira6.github.io/%E6%9D%82%E5%AD%A6.html</loc>  <lastmod>2024-12-15</lastmod>  <changefreq>monthly</changefreq>
@@ -69,10 +69,10 @@
     <loc>https://muneakira6.github.io/haitao.html</loc>  <lastmod>2024-11-05</lastmod>  <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>  <url>
-    <loc>https://muneakira6.github.io/japan_ticket.html</loc>  <lastmod>2024-11-05</lastmod>  <changefreq>monthly</changefreq>
+    <loc>https://muneakira6.github.io/hasunosura.html</loc>  <lastmod>2024-11-05</lastmod>  <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>  <url>
-    <loc>https://muneakira6.github.io/hasunosura.html</loc>  <lastmod>2024-11-05</lastmod>  <changefreq>monthly</changefreq>
+    <loc>https://muneakira6.github.io/japan_ticket.html</loc>  <lastmod>2024-11-05</lastmod>  <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>  <url>
     <loc>https://muneakira6.github.io/liella!.html</loc>  <lastmod>2024-11-05</lastmod>  <changefreq>monthly</changefreq>
@@ -90,10 +90,10 @@
     <loc>https://muneakira6.github.io/run.html</loc>  <lastmod>2024-11-05</lastmod>  <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>  <url>
-    <loc>https://muneakira6.github.io/search/index.html</loc>  <lastmod>2024-11-05</lastmod>  <changefreq>monthly</changefreq>
+    <loc>https://muneakira6.github.io/categories/index.html</loc>  <lastmod>2024-11-05</lastmod>  <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>  <url>
-    <loc>https://muneakira6.github.io/categories/index.html</loc>  <lastmod>2024-11-05</lastmod>  <changefreq>monthly</changefreq>
+    <loc>https://muneakira6.github.io/search/index.html</loc>  <lastmod>2024-11-05</lastmod>  <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>  <url>
     <loc>https://muneakira6.github.io/tags/index.html</loc>  <lastmod>2024-11-05</lastmod>  <changefreq>monthly</changefreq>
@@ -134,16 +134,6 @@
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>  <url>
-    <loc>https://muneakira6.github.io/tags/%E3%82%A2%E3%83%8B%E3%83%A1/</loc>
-    <lastmod>2024-12-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>  <url>
-    <loc>https://muneakira6.github.io/tags/%E9%81%8A%E8%A8%98/</loc>
-    <lastmod>2024-12-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>  <url>
     <loc>https://muneakira6.github.io/tags/%E9%BA%BB%E5%80%89%E3%82%82%E3%82%82/</loc>
     <lastmod>2024-12-25</lastmod>
     <changefreq>weekly</changefreq>
@@ -155,6 +145,11 @@
     <priority>0.2</priority>
   </url>  <url>
     <loc>https://muneakira6.github.io/tags/Pseudo-tech/</loc>
+    <lastmod>2024-12-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>  <url>
+    <loc>https://muneakira6.github.io/tags/%E3%82%A2%E3%83%8B%E3%83%A1/</loc>
     <lastmod>2024-12-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -180,6 +175,11 @@
     <priority>0.2</priority>
   </url>  <url>
     <loc>https://muneakira6.github.io/tags/Liella/</loc>
+    <lastmod>2024-12-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>  <url>
+    <loc>https://muneakira6.github.io/tags/%E9%81%8A%E8%A8%98/</loc>
     <lastmod>2024-12-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -219,12 +219,12 @@
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>  <url>
-    <loc>https://muneakira6.github.io/categories/2023-Best/</loc>
+    <loc>https://muneakira6.github.io/categories/Tech/</loc>
     <lastmod>2024-12-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>  <url>
-    <loc>https://muneakira6.github.io/categories/Tech/</loc>
+    <loc>https://muneakira6.github.io/categories/2023-Best/</loc>
     <lastmod>2024-12-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
