@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Dumping My own L3 CDM with Android Studio</title>
+      <link href="/DRM.html"/>
+      <url>/DRM.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2><p><a href="https://forum.videohelp.com/threads/408031-Dumping-Your-own-L3-CDM-with-Android-Studio">https://forum.videohelp.com/threads/408031-Dumping-Your-own-L3-CDM-with-Android-Studio</a></p><p><a href="https://github.com/wvdumper/dumper/issues/31#issuecomment-1745622411">https://github.com/wvdumper/dumper/issues/31#issuecomment-1745622411</a></p><h2 id="Step"><a href="#Step" class="headerlink" title="Step"></a>Step</h2><h3 id="1-Android-Studio"><a href="#1-Android-Studio" class="headerlink" title="1. Android Studio"></a>1. Android Studio</h3><p>Pixel 4 XL API 29 No Google Play</p><h3 id="2-download-frida-server"><a href="#2-download-frida-server" class="headerlink" title="2. download frida-server"></a>2. download frida-server</h3><p><code>frida-server-16.0.2-android-arm64</code></p><h3 id="3"><a href="#3" class="headerlink" title="3."></a>3.</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">adb devices</span><br><span class="line">adb push frida-server-16.0.2-android-arm64 /sdcard</span><br><span class="line">adb shell</span><br><span class="line"></span><br><span class="line">su</span><br><span class="line">mv /sdcard/frida-server-16.0.2-android-arm64 /data/local/tmp</span><br><span class="line">chmod +x /data/local/tmp/frida-server-16.0.2-android-arm64</span><br><span class="line">/data/local/tmp/frida-server-16.0.2-android-arm64</span><br></pre></td></tr></table></figure><p>keep this window open!</p><h3 id="4-dumper"><a href="#4-dumper" class="headerlink" title="4. dumper"></a>4. dumper</h3><p><a href="https://github.com/wvdumper/dumper">https://github.com/wvdumper/dumper</a></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Package      Version</span><br><span class="line">------------ -------</span><br><span class="line">frida        16.7.4</span><br><span class="line">pip          25.0</span><br><span class="line">protobuf     3.20.3</span><br><span class="line">pycryptodome 3.22.0</span><br></pre></td></tr></table></figure><p><code>python dump_keys.py</code></p><h3 id="5-edit-dumper"><a href="#5-edit-dumper" class="headerlink" title="5. edit dumper"></a>5. edit dumper</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb pull /vendor/lib64/libwvhidl.so</span><br><span class="line">nm -gD libwvhidl.so</span><br></pre></td></tr></table></figure><p>the output will be like:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">000000000023fe14 T v2i_ASN1_BIT_STRING</span><br><span class="line">000000000023dfac T v2i_GENERAL_NAME</span><br><span class="line">000000000023ded0 T v2i_GENERAL_NAMES</span><br><span class="line">000000000023dfc4 T v2i_GENERAL_NAME_ex</span><br><span class="line">000000000026eb00 T vehbyocv</span><br><span class="line">00000000002710f8 T ygjiljer</span><br><span class="line">0000000000270098 T yhwxewib</span><br><span class="line">000000000026ed48 T ywbqglwf</span><br><span class="line">000000000026e518 T zlhgtlbc</span><br><span class="line">0000000000270b90 T znyuaxnv</span><br><span class="line">000000000026ecd0 T zqajgkxr</span><br></pre></td></tr></table></figure><p>Add all the 8-digit function names to <code>dumper/Helpers/script.js</code>.</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="variable constant_">KNOWN_DYNAMIC_FUNC</span> = [<span class="string">&#x27;ulns&#x27;</span>, <span class="string">&#x27;cwkfcplc&#x27;</span>, <span class="string">&#x27;dnvffnze&#x27;</span>, <span class="string">&#x27;vehbyocv&#x27;</span>, <span class="string">&#x27;ygjiljer&#x27;</span>, <span class="string">&#x27;yhwxewib&#x27;</span>, <span class="string">&#x27;ywbqglwf&#x27;</span>, <span class="string">&#x27;zlhgtlbc&#x27;</span>, <span class="string">&#x27;znyuaxnv&#x27;</span>, <span class="string">&#x27;zqajgkxr&#x27;</span>]; </span><br></pre></td></tr></table></figure><h3 id="6"><a href="#6" class="headerlink" title="6."></a>6.</h3><p>Now, there are two windows opening.<br>Then launch the emulator and go to <code>https://bitmovin.com/demos/drm</code>.</p><p>the magic will happen!</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Tech </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Pseudo-tech </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>麻倉ももオケコン兵庫公演紀行</title>
       <link href="/kobe_travel.html"/>
       <url>/kobe_travel.html</url>
