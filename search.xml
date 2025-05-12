@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>学マスをMacで遊ぶ方法</title>
+      <link href="/gkmas_mac.html"/>
+      <url>/gkmas_mac.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2><p><a href="https://note.com/hoy0verse/n/n043bb3308a0d#5e54f119-c5eb-45a0-bc8f-00c03c283214">https://note.com/hoy0verse/n/n043bb3308a0d#5e54f119-c5eb-45a0-bc8f-00c03c283214</a></p><p><a href="https://misskey.io/notes/a5pvn728kcix0312">https://misskey.io/notes/a5pvn728kcix0312</a></p><h2 id="手順"><a href="#手順" class="headerlink" title="手順"></a>手順</h2><p>上記したRefを見れば大体わかると思います。</p><h3 id="1-Sideloadyをインストール"><a href="#1-Sideloadyをインストール" class="headerlink" title="1. Sideloadyをインストール"></a>1. Sideloadyをインストール</h3><h3 id="2-学マスのIPAファイルをダウンロード"><a href="#2-学マスのIPAファイルをダウンロード" class="headerlink" title="2. 学マスのIPAファイルをダウンロード"></a>2. 学マスのIPAファイルをダウンロード</h3><h3 id="3-Sideloadする"><a href="#3-Sideloadする" class="headerlink" title="3. Sideloadする"></a>3. Sideloadする</h3><h3 id="4-Launch"><a href="#4-Launch" class="headerlink" title="4. Launch!"></a>4. Launch!</h3><p>ここで問題発生。ログイン画面は正常ですが、ダウンロードが始まると画面が真っ黒になってしまいました。（おそらく横向き表示になるのが原因）</p><h2 id="解決策"><a href="#解決策" class="headerlink" title="解決策"></a>解決策</h2><p>(<a href="https://misskey.io/notes/a5pvn728kcix0312">https://misskey.io/notes/a5pvn728kcix0312</a>)</p><p>これをipaに注入する。</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">key</span>&gt;</span>UISupportedInterfaceOrientations<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">array</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">string</span>&gt;</span>UIInterfaceOrientationPortrait<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">string</span>&gt;</span>UIInterfaceOrientationPortraitUpsideDown<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">string</span>&gt;</span>UIInterfaceOrientationLandscapeLeft<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">string</span>&gt;</span>UIInterfaceOrientationLandscapeRight<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">array</span>&gt;</span></span><br></pre></td></tr></table></figure><p>再度Sideloadします。</p><p>また画面が黒くなった時、左上のメニューの<code>表示</code>-&gt;<code>横向き</code>&#x2F;<code>縦向き</code>を切り替えれば直るはず。</p><p><img src="https://imgur.com/lAah548.jpg"></p><p>でもやはり解像度はiPad仕様のまま。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Tech </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Pseudo-tech </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>浅谈日本银行和信用卡</title>
       <link href="/japan_credit_card.html"/>
       <url>/japan_credit_card.html</url>
