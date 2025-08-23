@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang=ja>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NTYCDBHW7Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-NTYCDBHW7Q');
+
+  gtag('event', 'custom_event_test', {
+    category: 'test_category',
+    platform: 'web',
+  });
+</script>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <!-- <meta name="robots" content="noindex"> -->
+    <!-- <meta name="googlebot" content="noindex"> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="google-site-verification" content="Kd5i9xsNaiKCLKdHxNrx0RIUXBczfd2VxycDTU5Pp28" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Tree Shaking 的核心思想是：通过静态分析模块的导入&#x2F;导出关系，找出那些从未被实际使用的代码，并在最终产物中将其删除，从而减小打包体积、提升性能。这个概念最早由 Rollup 推出，随后 Webpack 在 2.0 版本开始支持，如今已经是几乎所有构建工具的标配。 为什么必须依赖 ES Modules？Tree Shaking 的前提是 静态可分析性。CommonJS 的 re">
+<meta property="og:type" content="article">
+<meta property="og:title" content="笔记：Tree Shaking 的原理与 Webpack 实现机制">
+<meta property="og:url" content="https://muneakira6.github.io/treeshaking.html">
+<meta property="og:site_name" content="Henceforth 🌱　🍑　🐸">
+<meta property="og:description" content="Tree Shaking 的核心思想是：通过静态分析模块的导入&#x2F;导出关系，找出那些从未被实际使用的代码，并在最终产物中将其删除，从而减小打包体积、提升性能。这个概念最早由 Rollup 推出，随后 Webpack 在 2.0 版本开始支持，如今已经是几乎所有构建工具的标配。 为什么必须依赖 ES Modules？Tree Shaking 的前提是 静态可分析性。CommonJS 的 re">
+<meta property="og:locale" content="ja_JP">
+<meta property="article:published_time" content="2024-11-30T16:23:56.000Z">
+<meta property="article:modified_time" content="2025-08-23T16:06:17.230Z">
+<meta property="article:author" content="Mune Akira">
+<meta property="article:tag" content="Pseudo-tech">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/Image_ruby.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/Image_ruby.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/Image_ruby.png">
+        
+      
+    
+    <!-- title -->
+    <title>笔记：Tree Shaking 的原理与 Webpack 实现机制</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="メニュー"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="メニュー"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="トップ" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">トップ</a></li><!--
+     --><!--
+       --><li><a href="/about/">プロフィール</a></li><!--
+     --><!--
+       --><li><a href="/archives/">記事一覧</a></li><!--
+     --><!--
+       --><li><a href="/tags/">タグ</a></li><!--
+     --><!--
+       --><li><a href="/categories/">カテゴリ</a></li><!--
+     --><!--
+       --><li><a href="/search/">探す</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="前へ" href="/kobe_travel.html"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="次へ" href="/september_travel_2.html"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="シェア" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">前へ</span>
+      <span id="i-next" class="info" style="display:none;">次へ</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">シェア</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muneakira6.github.io/treeshaking.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muneakira6.github.io/treeshaking.html&text=笔记：Tree Shaking 的原理与 Webpack 实现机制"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muneakira6.github.io/treeshaking.html&title=笔记：Tree Shaking 的原理与 Webpack 实现机制"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muneakira6.github.io/treeshaking.html&is_video=false&description=笔记：Tree Shaking 的原理与 Webpack 实现机制"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" href="mailto:?subject=笔记：Tree Shaking 的原理与 Webpack 实现机制&body=Check out this article: https://muneakira6.github.io/treeshaking.html"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muneakira6.github.io/treeshaking.html&title=笔记：Tree Shaking 的原理与 Webpack 实现机制"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muneakira6.github.io/treeshaking.html&title=笔记：Tree Shaking 的原理与 Webpack 实现机制"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muneakira6.github.io/treeshaking.html&title=笔记：Tree Shaking 的原理与 Webpack 实现机制"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muneakira6.github.io/treeshaking.html&title=笔记：Tree Shaking 的原理与 Webpack 实现机制"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muneakira6.github.io/treeshaking.html&name=笔记：Tree Shaking 的原理与 Webpack 实现机制&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muneakira6.github.io/treeshaking.html&t=笔记：Tree Shaking 的原理与 Webpack 实现机制"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BF%85%E9%A1%BB%E4%BE%9D%E8%B5%96-ES-Modules%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">为什么必须依赖 ES Modules？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8-Webpack-%E4%B8%AD%E5%90%AF%E7%94%A8-Tree-Shaking"><span class="toc-number">2.</span> <span class="toc-text">在 Webpack 中启用 Tree Shaking</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Webpack-%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">Webpack 的实现原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FlagDependencyExportsPlugin-%E4%B8%8E-ModuleGraph"><span class="toc-number">4.</span> <span class="toc-text">FlagDependencyExportsPlugin 与 ModuleGraph</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Example"><span class="toc-number">5.</span> <span class="toc-text">Example</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        笔记：Tree Shaking 的原理与 Webpack 实现机制
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Mune Akira</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-11-30T16:23:56.000Z" class="dt-published" itemprop="datePublished">2024-12-01</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Tech/">Tech</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Pseudo-tech/" rel="tag">Pseudo-tech</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>Tree Shaking 的核心思想是：通过静态分析模块的导入&#x2F;导出关系，找出那些从未被实际使用的代码，并在最终产物中将其删除，从而减小打包体积、提升性能。<br>这个概念最早由 Rollup 推出，随后 Webpack 在 2.0 版本开始支持，如今已经是几乎所有构建工具的标配。</p>
+<h2 id="为什么必须依赖-ES-Modules？"><a href="#为什么必须依赖-ES-Modules？" class="headerlink" title="为什么必须依赖 ES Modules？"></a>为什么必须依赖 ES Modules？</h2><p>Tree Shaking 的前提是 <strong>静态可分析性</strong>。<br>CommonJS 的 <code>require</code> 过于灵活（可以在运行时拼接路径、条件加载），构建工具无法在编译阶段完整确定模块依赖，因此无法精确删除未使用的代码。相比之下，ES Modules 的 import&#x2F;export 语法必须写在顶层，路径是字符串字面量，这让依赖关系在构建阶段就能完全确定。</p>
+<p>举个例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不合法的 ES Module 写法（因此保证了静态可分析性）</span></span><br><span class="line"><span class="keyword">if</span> (condition) &#123;</span><br><span class="line">  <span class="keyword">import</span> &#123; foo &#125; <span class="keyword">from</span> <span class="string">&quot;./module&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种语法在 ESM 中直接报错，但在 CommonJS 中却是允许的。这也是为什么 Tree Shaking 只能在 ESM 下可靠运行。</p>
+<h2 id="在-Webpack-中启用-Tree-Shaking"><a href="#在-Webpack-中启用-Tree-Shaking" class="headerlink" title="在 Webpack 中启用 Tree Shaking"></a>在 Webpack 中启用 Tree Shaking</h2><p>要让 Webpack 正确执行 Tree Shaking，需要满足几个条件：</p>
+<ol>
+<li><strong>代码必须使用 ESM 语法</strong>（<code>import/export</code>），而不是 CommonJS。</li>
+<li><strong>生产模式</strong>：<code>mode: &quot;production&quot;</code>。</li>
+<li><strong>启用 usedExports</strong>：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">optimization</span>: &#123;</span><br><span class="line">  <span class="attr">usedExports</span>: <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+这一步会让 Webpack 标记哪些导出未被使用。</li>
+<li><strong>设置 sideEffects</strong>：在 <code>package.json</code> 中标记哪些文件有副作用。<ul>
+<li>全部无副作用：<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span> <span class="attr">&quot;sideEffects&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span> <span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></li>
+<li>仅样式文件有副作用：<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span> <span class="attr">&quot;sideEffects&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;*.css&quot;</span><span class="punctuation">,</span> <span class="string">&quot;*.scss&quot;</span><span class="punctuation">]</span> <span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><strong>确保 Babel 不会把 ESM 转成 CommonJS</strong>，否则 Tree Shaking 会失效。</li>
+</ol>
+<p>同时，在代码层面也要注意 <strong>避免整包导入</strong>，而是只引入需要的部分：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不推荐（难以 shake 掉没用的代码）</span></span><br><span class="line"><span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">&quot;lodash&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 推荐（可被 tree shake）</span></span><br><span class="line"><span class="keyword">import</span> &#123; debounce &#125; <span class="keyword">from</span> <span class="string">&quot;lodash&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Webpack-的实现原理"><a href="#Webpack-的实现原理" class="headerlink" title="Webpack 的实现原理"></a>Webpack 的实现原理</h2><p>Webpack 的 Tree Shaking 大体分为两个阶段：<strong>标记 (mark)</strong> 和 <strong>清除 (prune)</strong></p>
+<ol>
+<li><strong>编译阶段 (Make&#x2F;Seal)</strong><ul>
+<li>Webpack 构建模块依赖图 (ModuleGraph)，收集所有导出。</li>
+<li>判断哪些导出实际被引用，未使用的导出会被打上特殊注释（如 <code>/* unused harmony export foo */</code>）。</li>
+</ul>
+</li>
+<li><strong>生成阶段</strong><ul>
+<li>打包输出时，这些未使用的导出依然会保留，但带有注释标记。</li>
+</ul>
+</li>
+<li><strong>压缩阶段</strong><ul>
+<li>由 Terser 等工具读取这些标记，真正删除无用代码。</li>
+</ul>
+</li>
+</ol>
+<p>这种设计的好处是：Webpack 本身只做“分析+标记”，而“删除”交给压缩器处理，两者解耦。</p>
+<h2 id="FlagDependencyExportsPlugin-与-ModuleGraph"><a href="#FlagDependencyExportsPlugin-与-ModuleGraph" class="headerlink" title="FlagDependencyExportsPlugin 与 ModuleGraph"></a>FlagDependencyExportsPlugin 与 ModuleGraph</h2><p>Webpack 内部有个核心插件 <code>FlagDependencyExportsPlugin</code>，负责分析每个模块的导出信息并写入缓存。<br>它依赖于 <strong>ModuleGraph</strong> 这个数据结构来记录模块之间的依赖关系和导出使用情况。</p>
+<p>每个导出的信息里会包含：</p>
+<ul>
+<li>是否真的导出了该变量 (<code>provided</code>)</li>
+<li>是否被其他模块使用 (<code>used</code>)</li>
+<li>是否允许重命名压缩 (<code>canMangle</code>)</li>
+<li>是否重定向自其他模块 (<code>from</code>)</li>
+</ul>
+<p>特别是 <code>canMangle</code> 字段：</p>
+<ul>
+<li>如果是内部函数、常量等，可以安全地压缩成短变量名。</li>
+<li>如果是库对外暴露的 API，则必须保留原始名字，避免破坏外部调用。</li>
+</ul>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><p>有如下代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// moment.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> moment = <span class="string">&quot;moment&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; moment &#125; <span class="keyword">from</span> <span class="string">&quot;./moment&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> foo = <span class="string">&quot;foo&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> bar = <span class="string">&quot;bar&quot;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="string">&quot;foo-bar&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(moment);</span><br></pre></td></tr></table></figure>
+
+<p>在开发模式下打包后，Webpack 会给未使用的导出加上注释：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* unused harmony exports bar, foo */</span></span><br><span class="line"><span class="comment">/* unused harmony default export */</span></span><br></pre></td></tr></table></figure>
+
+<p>只有 <code>moment</code> 被识别为真正使用。到了生产模式下，Terser 就会据此移除无用代码，最终产物只包含 <code>moment</code> 的部分。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li><strong>必须使用 ESM</strong>，因为它保证了依赖关系的静态可分析性。</li>
+<li><strong>Webpack 分两步走</strong>：标记未使用导出 → 压缩阶段清理。</li>
+<li><strong>内部依赖于 ModuleGraph 和 FlagDependencyExportsPlugin</strong> 来精确追踪导出和使用关系。</li>
+<li><strong>合理使用 sideEffects 和按需导入</strong>，才能让 Tree Shaking 发挥最大效果。</li>
+</ol>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">トップ</a></li>
+        
+          <li><a href="/about/">プロフィール</a></li>
+        
+          <li><a href="/archives/">記事一覧</a></li>
+        
+          <li><a href="/tags/">タグ</a></li>
+        
+          <li><a href="/categories/">カテゴリ</a></li>
+        
+          <li><a href="/search/">探す</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BF%85%E9%A1%BB%E4%BE%9D%E8%B5%96-ES-Modules%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">为什么必须依赖 ES Modules？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8-Webpack-%E4%B8%AD%E5%90%AF%E7%94%A8-Tree-Shaking"><span class="toc-number">2.</span> <span class="toc-text">在 Webpack 中启用 Tree Shaking</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Webpack-%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">Webpack 的实现原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FlagDependencyExportsPlugin-%E4%B8%8E-ModuleGraph"><span class="toc-number">4.</span> <span class="toc-text">FlagDependencyExportsPlugin 与 ModuleGraph</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Example"><span class="toc-number">5.</span> <span class="toc-text">Example</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muneakira6.github.io/treeshaking.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muneakira6.github.io/treeshaking.html&text=笔记：Tree Shaking 的原理与 Webpack 实现机制"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muneakira6.github.io/treeshaking.html&title=笔记：Tree Shaking 的原理与 Webpack 实现机制"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muneakira6.github.io/treeshaking.html&is_video=false&description=笔记：Tree Shaking 的原理与 Webpack 实现机制"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" href="mailto:?subject=笔记：Tree Shaking 的原理与 Webpack 实现机制&body=Check out this article: https://muneakira6.github.io/treeshaking.html"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muneakira6.github.io/treeshaking.html&title=笔记：Tree Shaking 的原理与 Webpack 实现机制"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muneakira6.github.io/treeshaking.html&title=笔记：Tree Shaking 的原理与 Webpack 实现机制"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muneakira6.github.io/treeshaking.html&title=笔记：Tree Shaking 的原理与 Webpack 实现机制"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muneakira6.github.io/treeshaking.html&title=笔记：Tree Shaking 的原理与 Webpack 实现机制"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muneakira6.github.io/treeshaking.html&name=笔记：Tree Shaking 的原理与 Webpack 实现机制&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muneakira6.github.io/treeshaking.html&t=笔记：Tree Shaking 的原理与 Webpack 实现机制"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li> -->
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2025
+    Mune Akira
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">トップ</a></li><!--
+     --><!--
+       --><li><a href="/about/">プロフィール</a></li><!--
+     --><!--
+       --><li><a href="/archives/">記事一覧</a></li><!--
+     --><!--
+       --><li><a href="/tags/">タグ</a></li><!--
+     --><!--
+       --><li><a href="/categories/">カテゴリ</a></li><!--
+     --><!--
+       --><li><a href="/search/">探す</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
