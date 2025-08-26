@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang=ja>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NTYCDBHW7Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-NTYCDBHW7Q');
+
+  gtag('event', 'custom_event_test', {
+    category: 'test_category',
+    platform: 'web',
+  });
+</script>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <!-- <meta name="robots" content="noindex"> -->
+    <!-- <meta name="googlebot" content="noindex"> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="google-site-verification" content="Kd5i9xsNaiKCLKdHxNrx0RIUXBczfd2VxycDTU5Pp28" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="一、模拟器调试1、启动Xcode2、选择菜单Xcode - Open Developer Tool - Simulator3、启动Simulator后，选择Simulator菜单Hardware - Device - iOS12.x - 再选择需要的手机&#x2F;iPad型号4、安装App，直接拖放App安装包到Simulator屏幕上，等待自动安装结束。5、在App内访问开发环境，打开电脑端S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iPhone调试移动端webview">
+<meta property="og:url" content="https://muneakira6.github.io/iphone.html">
+<meta property="og:site_name" content="Henceforth 🌱　🍑　🐸">
+<meta property="og:description" content="一、模拟器调试1、启动Xcode2、选择菜单Xcode - Open Developer Tool - Simulator3、启动Simulator后，选择Simulator菜单Hardware - Device - iOS12.x - 再选择需要的手机&#x2F;iPad型号4、安装App，直接拖放App安装包到Simulator屏幕上，等待自动安装结束。5、在App内访问开发环境，打开电脑端S">
+<meta property="og:locale" content="ja_JP">
+<meta property="article:published_time" content="2022-11-11T16:23:56.000Z">
+<meta property="article:modified_time" content="2025-08-26T06:13:08.061Z">
+<meta property="article:author" content="Mune Akira">
+<meta property="article:tag" content="Pseudo-tech">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/Image_ruby.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/Image_ruby.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/Image_ruby.png">
+        
+      
+    
+    <!-- title -->
+    <title>iPhone调试移动端webview</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="メニュー"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="メニュー"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="トップ" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">トップ</a></li><!--
+     --><!--
+       --><li><a href="/about/">プロフィール</a></li><!--
+     --><!--
+       --><li><a href="/archives/">記事一覧</a></li><!--
+     --><!--
+       --><li><a href="/tags/">タグ</a></li><!--
+     --><!--
+       --><li><a href="/categories/">カテゴリ</a></li><!--
+     --><!--
+       --><li><a href="/search/">探す</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="前へ" href="/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="次へ" href="/%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%20React%20hooks%20%E9%97%AD%E5%8C%85%E9%99%B7%E9%98%B1.html"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="シェア" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">前へ</span>
+      <span id="i-next" class="info" style="display:none;">次へ</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">シェア</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muneakira6.github.io/iphone.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muneakira6.github.io/iphone.html&text=iPhone调试移动端webview"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muneakira6.github.io/iphone.html&title=iPhone调试移动端webview"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muneakira6.github.io/iphone.html&is_video=false&description=iPhone调试移动端webview"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" href="mailto:?subject=iPhone调试移动端webview&body=Check out this article: https://muneakira6.github.io/iphone.html"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muneakira6.github.io/iphone.html&title=iPhone调试移动端webview"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muneakira6.github.io/iphone.html&title=iPhone调试移动端webview"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muneakira6.github.io/iphone.html&title=iPhone调试移动端webview"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muneakira6.github.io/iphone.html&title=iPhone调试移动端webview"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muneakira6.github.io/iphone.html&name=iPhone调试移动端webview&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muneakira6.github.io/iphone.html&t=iPhone调试移动端webview"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%A8%A1%E6%8B%9F%E5%99%A8%E8%B0%83%E8%AF%95"><span class="toc-number">1.</span> <span class="toc-text">一、模拟器调试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%9C%9F%E6%9C%BA%E8%B0%83%E8%AF%95"><span class="toc-number">2.</span> <span class="toc-text">二、真机调试</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        iPhone调试移动端webview
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Mune Akira</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-11-11T16:23:56.000Z" class="dt-published" itemprop="datePublished">2022-11-12</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Tech/">Tech</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Pseudo-tech/" rel="tag">Pseudo-tech</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="一、模拟器调试"><a href="#一、模拟器调试" class="headerlink" title="一、模拟器调试"></a>一、模拟器调试</h2><p>1、启动Xcode<br>2、选择菜单Xcode - Open Developer Tool - Simulator<br>3、启动Simulator后，选择Simulator菜单Hardware - Device - iOS12.x - 再选择需要的手机&#x2F;iPad型号<br>4、安装App，直接拖放App安装包到Simulator屏幕上，等待自动安装结束。<br>5、在App内访问开发环境，打开电脑端Safari浏览器，选择菜单：开发 - 模拟器，右侧会显示App内打开的web地址列表，选择你要调试的地址，会打开一个<br>浏览器控制台，开始调试web view</p>
+<h2 id="二、真机调试"><a href="#二、真机调试" class="headerlink" title="二、真机调试"></a>二、真机调试</h2><p>1、全局安装<code>spy-debugger</code>包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install spy-debugger -g</span><br></pre></td></tr></table></figure>
+
+<p>2、启动spy-debugger，浏览器自动打开调试页面 <a target="_blank" rel="noopener" href="http://127.0.0.1:63564/">http://127.0.0.1:63564</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spy-debugger</span><br></pre></td></tr></table></figure>
+
+<p>3、 打开调试页面<a target="_blank" rel="noopener" href="http://127.0.0.1:49858/%EF%BC%8C%E7%82%B9%E5%87%BBRootCA%E4%B8%8B%E8%BD%BD%E8%AF%81%E4%B9%A6%EF%BC%8C%E5%8F%91%E5%88%B0%E6%89%8B%E6%9C%BA%E4%B8%8A%E5%AE%89%E8%A3%85%E5%B9%B6%E6%B7%BB%E5%8A%A0%E4%BF%A1%E4%BB%BB%E3%80%82">http://127.0.0.1:49858/，点击RootCA下载证书，发到手机上安装并添加信任。</a><br>4、确保手机和电脑在同一局域网且在同一网段，手机设置电脑为代理，设置路径：设置 - 无线局域网 - 点击当前连接的wifi右侧图标 - 配置代理 - 手<br>动 - 服务器填电脑IP，端口默认填9888，保存，注意：因某些公司网络限制，电脑和手机很可能不在同一网段，如果电脑有无线网卡，将电脑wifi开关也打<br>开，设置代理时就用wifi连接的IP地址<br>5、在App内访问开发环境，在<a target="_blank" rel="noopener" href="http://127.0.0.1:49858/%E9%A1%B5%E9%9D%A2%E6%9F%A5%E7%9C%8B%E8%AF%B7%E6%B1%82%E5%92%8C%E6%8E%A7%E5%88%B6%E5%8F%B0%E8%BE%93%E5%87%BA%EF%BC%8C%E9%A1%B5%E9%9D%A2%E5%88%86%E4%B8%BA%E4%B8%A4%E5%9D%97%EF%BC%9A%E3%80%90%E9%A1%B5%E9%9D%A2%E8%B0%83%E8%AF%95%E3%80%91%E5%92%8C%E3%80%90%E8%AF%B7%E6%B1%82%E6%8A%93%E5%8C%85%E3%80%91%E3%80%82">http://127.0.0.1:49858/页面查看请求和控制台输出，页面分为两块：【页面调试】和【请求抓包】。</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">トップ</a></li>
+        
+          <li><a href="/about/">プロフィール</a></li>
+        
+          <li><a href="/archives/">記事一覧</a></li>
+        
+          <li><a href="/tags/">タグ</a></li>
+        
+          <li><a href="/categories/">カテゴリ</a></li>
+        
+          <li><a href="/search/">探す</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%A8%A1%E6%8B%9F%E5%99%A8%E8%B0%83%E8%AF%95"><span class="toc-number">1.</span> <span class="toc-text">一、模拟器调试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%9C%9F%E6%9C%BA%E8%B0%83%E8%AF%95"><span class="toc-number">2.</span> <span class="toc-text">二、真机调试</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muneakira6.github.io/iphone.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muneakira6.github.io/iphone.html&text=iPhone调试移动端webview"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muneakira6.github.io/iphone.html&title=iPhone调试移动端webview"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muneakira6.github.io/iphone.html&is_video=false&description=iPhone调试移动端webview"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" href="mailto:?subject=iPhone调试移动端webview&body=Check out this article: https://muneakira6.github.io/iphone.html"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muneakira6.github.io/iphone.html&title=iPhone调试移动端webview"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muneakira6.github.io/iphone.html&title=iPhone调试移动端webview"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muneakira6.github.io/iphone.html&title=iPhone调试移动端webview"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muneakira6.github.io/iphone.html&title=iPhone调试移动端webview"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muneakira6.github.io/iphone.html&name=iPhone调试移动端webview&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muneakira6.github.io/iphone.html&t=iPhone调试移动端webview"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li> -->
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2025
+    Mune Akira
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">トップ</a></li><!--
+     --><!--
+       --><li><a href="/about/">プロフィール</a></li><!--
+     --><!--
+       --><li><a href="/archives/">記事一覧</a></li><!--
+     --><!--
+       --><li><a href="/tags/">タグ</a></li><!--
+     --><!--
+       --><li><a href="/categories/">カテゴリ</a></li><!--
+     --><!--
+       --><li><a href="/search/">探す</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

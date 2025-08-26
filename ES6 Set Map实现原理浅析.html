@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang=ja>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NTYCDBHW7Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-NTYCDBHW7Q');
+
+  gtag('event', 'custom_event_test', {
+    category: 'test_category',
+    platform: 'web',
+  });
+</script>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <!-- <meta name="robots" content="noindex"> -->
+    <!-- <meta name="googlebot" content="noindex"> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="google-site-verification" content="Kd5i9xsNaiKCLKdHxNrx0RIUXBczfd2VxycDTU5Pp28" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Set简介阮一峰：“Set类似于数组，但是成员的值都是唯一的，没有重复的值。” Set如何实现元素不重复？ Array能不能实现元素不重复？ Array实现Set特性Array只要稍微封装一下就能实现Set特性。 但是用数组实现的缺点是低效。数组基于值查找的时间复杂度是O(n)，低效的原因来源于其底层数据结构，Array是按索引存储的。 Array的存储方式数组的底层数据结构是一个线性表，即在内存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6 Set Map实现原理浅析">
+<meta property="og:url" content="https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html">
+<meta property="og:site_name" content="Henceforth 🌱　🍑　🐸">
+<meta property="og:description" content="Set简介阮一峰：“Set类似于数组，但是成员的值都是唯一的，没有重复的值。” Set如何实现元素不重复？ Array能不能实现元素不重复？ Array实现Set特性Array只要稍微封装一下就能实现Set特性。 但是用数组实现的缺点是低效。数组基于值查找的时间复杂度是O(n)，低效的原因来源于其底层数据结构，Array是按索引存储的。 Array的存储方式数组的底层数据结构是一个线性表，即在内存">
+<meta property="og:locale" content="ja_JP">
+<meta property="article:published_time" content="2022-08-17T16:23:56.000Z">
+<meta property="article:modified_time" content="2025-08-26T06:21:35.283Z">
+<meta property="article:author" content="Mune Akira">
+<meta property="article:tag" content="Pseudo-tech">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/Image_ruby.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/Image_ruby.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/Image_ruby.png">
+        
+      
+    
+    <!-- title -->
+    <title>ES6 Set Map实现原理浅析</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="メニュー"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="メニュー"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="トップ" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">トップ</a></li><!--
+     --><!--
+       --><li><a href="/about/">プロフィール</a></li><!--
+     --><!--
+       --><li><a href="/archives/">記事一覧</a></li><!--
+     --><!--
+       --><li><a href="/tags/">タグ</a></li><!--
+     --><!--
+       --><li><a href="/categories/">カテゴリ</a></li><!--
+     --><!--
+       --><li><a href="/search/">探す</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="前へ" href="/%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%20React%20hooks%20%E9%97%AD%E5%8C%85%E9%99%B7%E9%98%B1.html"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="シェア" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">前へ</span>
+      <span id="i-next" class="info" style="display:none;">次へ</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">シェア</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html&text=ES6 Set Map实现原理浅析"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html&title=ES6 Set Map实现原理浅析"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html&is_video=false&description=ES6 Set Map实现原理浅析"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" href="mailto:?subject=ES6 Set Map实现原理浅析&body=Check out this article: https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html&title=ES6 Set Map实现原理浅析"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html&title=ES6 Set Map实现原理浅析"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html&title=ES6 Set Map实现原理浅析"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html&title=ES6 Set Map实现原理浅析"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html&name=ES6 Set Map实现原理浅析&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html&t=ES6 Set Map实现原理浅析"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Set%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">Set简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Array%E5%AE%9E%E7%8E%B0Set%E7%89%B9%E6%80%A7"><span class="toc-number">1.1.</span> <span class="toc-text">Array实现Set特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Array%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">Array的存储方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Set%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%EF%BC%9A%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="toc-number">1.3.</span> <span class="toc-text">Set的底层实现：哈希表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E7%BC%BA%E9%99%B7%EF%BC%9A%E5%93%88%E5%B8%8C%E5%86%B2%E7%AA%81"><span class="toc-number">1.4.</span> <span class="toc-text">哈希表的缺陷：哈希冲突</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Set%E6%80%BB%E7%BB%93"><span class="toc-number">1.5.</span> <span class="toc-text">Set总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Map%E7%AE%80%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">Map简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Object%E7%9A%84%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84%EF%BC%88%E5%B0%8F%E4%BA%8E128%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">Object的存储结构（小于128）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Object%E7%9A%84%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84%EF%BC%88%E5%A4%A7%E4%BA%8E128%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">Object的存储结构（大于128）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83"><span class="toc-number">2.3.</span> <span class="toc-text">思考</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Object%E7%9A%84%E5%85%B6%E4%BD%99%E5%9C%BA%E6%99%AF"><span class="toc-number">2.4.</span> <span class="toc-text">Object的其余场景</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        ES6 Set Map实现原理浅析
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Mune Akira</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-08-17T16:23:56.000Z" class="dt-published" itemprop="datePublished">2022-08-18</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Tech/">Tech</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Pseudo-tech/" rel="tag">Pseudo-tech</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Set简介"><a href="#Set简介" class="headerlink" title="Set简介"></a>Set简介</h2><p>阮一峰：“Set类似于数组，但是成员的值都是唯一的，没有重复的值。”</p>
+<p>Set如何实现元素不重复？</p>
+<p>Array能不能实现元素不重复？</p>
+<h3 id="Array实现Set特性"><a href="#Array实现Set特性" class="headerlink" title="Array实现Set特性"></a>Array实现Set特性</h3><p>Array只要稍微封装一下就能实现Set特性。</p>
+<p>但是用数组实现的缺点是低效。数组基于值查找的时间复杂度是O(n)，低效的原因来源于其底层数据结构，Array是按索引存储的。</p>
+<h3 id="Array的存储方式"><a href="#Array的存储方式" class="headerlink" title="Array的存储方式"></a>Array的存储方式</h3><p>数组的底层数据结构是一个线性表，即在内存上体现为一段连续的内存。</p>
+<p>数组按索引查找的方式：起始地址 + 索引。按索引查找的时间复杂度是O(1)</p>
+<p>数组的优势：根据索引号来查找数组元素，速度块，效率高。<br>数组的劣势：按值查找时，只能根据索引遍历出每一个数组元素，然后和要查找的数据元素进行对比，再优化一点就需要使用算法了，比如二分查找，排序<br>后二分查找。</p>
+<h3 id="Set的底层实现：哈希表"><a href="#Set的底层实现：哈希表" class="headerlink" title="Set的底层实现：哈希表"></a>Set的底层实现：哈希表</h3><p>为了优化按值查找，Set 使用了哈希表。</p>
+<p>哈希表在内存上，也是开辟一段连续内存用来存储数据，但是有别于数组，哈希表不会将元素按照添加顺序依次存入连续内存中，元素在内存中存储位置是由哈希算法计算得出的。</p>
+<p>哈希算法：将【元素值】和【哈希表长度】经过一种算法，计算出元素在哈希表中的存储位置。最简单的哈希算法：哈希值 % 哈希表长度。</p>
+<p>哈希表不使用索引，也不会产出索引，而是直接根据元素计算出其内存地址。所以没有数组中的 get(index)，只有has(value)</p>
+<h3 id="哈希表的缺陷：哈希冲突"><a href="#哈希表的缺陷：哈希冲突" class="headerlink" title="哈希表的缺陷：哈希冲突"></a>哈希表的缺陷：哈希冲突</h3><p>哈希冲突举例：abc bca cab</p>
+<p>哈希表处理哈希冲突的方式是拉链法，即哈希表每一个存储位置可以看出一个桶，当需要在一个存储位置上存储多个值的话，就相当于像桶中放数据，而在数据结构上，这个桶就是单向链表。所以哈希表数据结构可以看出是（数组+单向链表），每个数组元素位置上可以拉一条单向链表存储多个值，一次来解决哈希冲突的元素的存放问题。</p>
+<p>当哈希表某一个位置发生的哈希冲突次数很多时，会导致该位置拉出来的单向链表越来越长。</p>
+<p>当我们在哈希表上查找的值，刚好在某个位置的单向链表上的话，那么此时该值的查询效率就会骤降，因为单向链表的长处在于元素的插入删除，而不在于元素的查询，我们可以将单向链表的查询操作的时间复杂度看成O(n)，差不多和数组一样。</p>
+<p>所以Set没有length，只有size属性。</p>
+<h3 id="Set总结"><a href="#Set总结" class="headerlink" title="Set总结"></a>Set总结</h3><p>对于 Array 和 Set 底层数据结构的探究，我们再来回顾Set特性：</p>
+<blockquote>
+<p>“Set 成员的值都是唯一的，没有重复的值”</p>
+</blockquote>
+<p>就会发现，这是很浅的理解，Set 比较 Array 的最大不同就是：Set 的值查找效率要比 Array 快的多，原因就是 Set 底层是哈希表，它查找元素，不是真的找，而是根据哈希算法，算出元素在哈希表中位置。</p>
+<p>如何记住存储的顺序？<br>答：维护一条插入链表。</p>
+<p>Set.entries()<br>Set 的 entries 应当理解为插入链，而不是数组的索引</p>
+<h2 id="Map简介"><a href="#Map简介" class="headerlink" title="Map简介"></a>Map简介</h2><p>Map 和 Object 其实都是存储的键值对（以下称为属性 Properties），但是 Map 比 Object 对象最明显的区别是Object 对象的 key 只能是字符串，就算<br>设置 Object 对象的 key 为对象，最终也会调用 key 的 toString 方法将其转为字符串，而 Map 的 key 可以是任意类型的数据。</p>
+<p>主要区别：实现属性唯一的方法不同。<br>我们可以思考一下 Object 的属性是如何保证唯一的？我们访问一个 Object 的属性的值时，是如何查询到属性的？<br>要实现Object的属性唯一，那么最简单就是哈希表！</p>
+<h3 id="Object的存储结构（小于128）"><a href="#Object的存储结构（小于128）" class="headerlink" title="Object的存储结构（小于128）"></a>Object的存储结构（小于128）</h3><p>但是 Object 并没有首选哈希表来存储属性，而是当属性个数小于 128 时，新增了一个 searchCache 缓存。<br>每次新增属性都要去这个缓存中找一找是否已存在，若已存在，则将属性值覆盖（覆盖采用顺序查找&#x2F;二分查找）到 FixedArray 的同名属性中，若不存在，<br>则将属性哈希值保存进 searchCache，并将属性的键值对加入 FixedArray 中。FixedArray 是 v8 实现的一个类似于数组的类，它表示一段连续的内存。</p>
+<h3 id="Object的存储结构（大于128）"><a href="#Object的存储结构（大于128）" class="headerlink" title="Object的存储结构（大于128）"></a>Object的存储结构（大于128）</h3><p>当属性个数大于128时，就会使用哈希表（按值存储）代替 searchCache 来保证属性唯一性，而键值对依旧保存在 FixedArray 中。</p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>为什么在小于128个属性的时候要专门搞一个 searchCache 呢，是因为 searchCache 比哈希表快么？<br>答：快。searchCache 和 hashMap 两种存储方式背区分为快属性&#x2F;慢属性<br>快是一方面，我想另一方面在于 searchCache 不会冲突，每次都是直接定位，而哈希表如果冲突了需要不断地找下一个元素，增加了比较次数。当属性比较少，并且有几个属性经常被用到的时候，searchCache 应该会有明显的优势。</p>
+<h3 id="Object的其余场景"><a href="#Object的其余场景" class="headerlink" title="Object的其余场景"></a>Object的其余场景</h3><p>再考虑key为整数的情况。<br>当key为整数的时候，这些对象整数属性的属性值会保存带一个elements有序数组中，且保存位置就是整数属性对应的element数组索引号，这样就可以根据索引号是属性唯一，并且可以实现根据索引号快速查询属性值。缺点就是，会造成内存浪费，因为数组的容量必须大于数组元素个数，且随着元素个数不断增加会扩容。</p>
+<p>{ 0: ‘a’, 1: ‘b’, 4: ’c’ } ——有序数组存储<br>{ 0: ‘a , 10000: ‘b’} ——哈希表存储</p>
+<p>可以看见Object对象将属性查询和存储搞得很复杂。</p>
+<p>而 ES6 的 Map 就简单了，单纯使用哈希表来保证属性唯一。</p>
+<p>那么二者在属性查找性能上的对比，考虑储存简单类型的情况：<br>如果属性个数 &lt;&#x3D;128，那么 Object 对象是 searchCache 查找，Map 是哈希表查找，考虑到可能存在哈希冲突的情况，Object更快一点。<br>如果属性个数 &gt;128，那么 Object 是哈希表查找，Map 也是哈希表查找，区别不大。</p>
+<p>如果属性是整数属性，且分布均匀，那Object对象会将整数属性当成数组索引查找，而Map还是使用哈希表查找，这个时候应该看Map的哈希算法对于整数属性的哈希值计算快不快了，但是应该还是没有Object对象直接当成数组索引来查快，因为一个要计算得到位置，一个直接当成位置。<br>（完）</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">トップ</a></li>
+        
+          <li><a href="/about/">プロフィール</a></li>
+        
+          <li><a href="/archives/">記事一覧</a></li>
+        
+          <li><a href="/tags/">タグ</a></li>
+        
+          <li><a href="/categories/">カテゴリ</a></li>
+        
+          <li><a href="/search/">探す</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Set%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">Set简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Array%E5%AE%9E%E7%8E%B0Set%E7%89%B9%E6%80%A7"><span class="toc-number">1.1.</span> <span class="toc-text">Array实现Set特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Array%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">Array的存储方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Set%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%EF%BC%9A%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="toc-number">1.3.</span> <span class="toc-text">Set的底层实现：哈希表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E7%BC%BA%E9%99%B7%EF%BC%9A%E5%93%88%E5%B8%8C%E5%86%B2%E7%AA%81"><span class="toc-number">1.4.</span> <span class="toc-text">哈希表的缺陷：哈希冲突</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Set%E6%80%BB%E7%BB%93"><span class="toc-number">1.5.</span> <span class="toc-text">Set总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Map%E7%AE%80%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">Map简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Object%E7%9A%84%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84%EF%BC%88%E5%B0%8F%E4%BA%8E128%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">Object的存储结构（小于128）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Object%E7%9A%84%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84%EF%BC%88%E5%A4%A7%E4%BA%8E128%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">Object的存储结构（大于128）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83"><span class="toc-number">2.3.</span> <span class="toc-text">思考</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Object%E7%9A%84%E5%85%B6%E4%BD%99%E5%9C%BA%E6%99%AF"><span class="toc-number">2.4.</span> <span class="toc-text">Object的其余场景</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html&text=ES6 Set Map实现原理浅析"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html&title=ES6 Set Map实现原理浅析"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html&is_video=false&description=ES6 Set Map实现原理浅析"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" href="mailto:?subject=ES6 Set Map实现原理浅析&body=Check out this article: https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html&title=ES6 Set Map实现原理浅析"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html&title=ES6 Set Map实现原理浅析"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html&title=ES6 Set Map实现原理浅析"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html&title=ES6 Set Map实现原理浅析"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html&name=ES6 Set Map实现原理浅析&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muneakira6.github.io/ES6%20Set%20Map%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90.html&t=ES6 Set Map实现原理浅析"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li> -->
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2025
+    Mune Akira
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">トップ</a></li><!--
+     --><!--
+       --><li><a href="/about/">プロフィール</a></li><!--
+     --><!--
+       --><li><a href="/archives/">記事一覧</a></li><!--
+     --><!--
+       --><li><a href="/tags/">タグ</a></li><!--
+     --><!--
+       --><li><a href="/categories/">カテゴリ</a></li><!--
+     --><!--
+       --><li><a href="/search/">探す</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

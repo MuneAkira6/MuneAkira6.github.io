@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang=ja>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NTYCDBHW7Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-NTYCDBHW7Q');
+
+  gtag('event', 'custom_event_test', {
+    category: 'test_category',
+    platform: 'web',
+  });
+</script>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <!-- <meta name="robots" content="noindex"> -->
+    <!-- <meta name="googlebot" content="noindex"> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="google-site-verification" content="Kd5i9xsNaiKCLKdHxNrx0RIUXBczfd2VxycDTU5Pp28" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="一、目前可以用的现成库   功能 forever nodemon pm2 node-supervisor    后台 √ √ √ ×   日志 √ × √ ×   热重载 √ √ √ √   监控 × × √ ×   集群 × × √    推荐用 forever，相比 pm2，少了 cluster 功能，负载均衡这一块需要交给运维自己配。 二、基于 egg-cluster 的移植方案阿里的后端框">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pm2替代方案">
+<meta property="og:url" content="https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html">
+<meta property="og:site_name" content="Henceforth 🌱　🍑　🐸">
+<meta property="og:description" content="一、目前可以用的现成库   功能 forever nodemon pm2 node-supervisor    后台 √ √ √ ×   日志 √ × √ ×   热重载 √ √ √ √   监控 × × √ ×   集群 × × √    推荐用 forever，相比 pm2，少了 cluster 功能，负载均衡这一块需要交给运维自己配。 二、基于 egg-cluster 的移植方案阿里的后端框">
+<meta property="og:locale" content="ja_JP">
+<meta property="article:published_time" content="2022-12-12T17:23:56.000Z">
+<meta property="article:modified_time" content="2025-08-26T06:24:00.427Z">
+<meta property="article:author" content="Mune Akira">
+<meta property="article:tag" content="Pseudo-tech">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/Image_ruby.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/Image_ruby.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/Image_ruby.png">
+        
+      
+    
+    <!-- title -->
+    <title>pm2替代方案</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="メニュー"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="メニュー"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="トップ" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">トップ</a></li><!--
+     --><!--
+       --><li><a href="/about/">プロフィール</a></li><!--
+     --><!--
+       --><li><a href="/archives/">記事一覧</a></li><!--
+     --><!--
+       --><li><a href="/tags/">タグ</a></li><!--
+     --><!--
+       --><li><a href="/categories/">カテゴリ</a></li><!--
+     --><!--
+       --><li><a href="/search/">探す</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="前へ" href="/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="次へ" href="/iphone.html"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="シェア" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">前へ</span>
+      <span id="i-next" class="info" style="display:none;">次へ</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">シェア</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html&text=pm2替代方案"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html&title=pm2替代方案"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html&is_video=false&description=pm2替代方案"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" href="mailto:?subject=pm2替代方案&body=Check out this article: https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html&title=pm2替代方案"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html&title=pm2替代方案"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html&title=pm2替代方案"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html&title=pm2替代方案"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html&name=pm2替代方案&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html&t=pm2替代方案"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%9B%AE%E5%89%8D%E5%8F%AF%E4%BB%A5%E7%94%A8%E7%9A%84%E7%8E%B0%E6%88%90%E5%BA%93"><span class="toc-number">1.</span> <span class="toc-text">一、目前可以用的现成库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%9F%BA%E4%BA%8E-egg-cluster-%E7%9A%84%E7%A7%BB%E6%A4%8D%E6%96%B9%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">二、基于 egg-cluster 的移植方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%BD%BF%E7%94%A8-linux-%E6%8F%90%E4%BE%9B%E7%9A%84%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4"><span class="toc-number">3.</span> <span class="toc-text">三、使用 linux 提供的系统命令</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        pm2替代方案
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Mune Akira</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-12-12T17:23:56.000Z" class="dt-published" itemprop="datePublished">2022-12-13</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Tech/">Tech</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Pseudo-tech/" rel="tag">Pseudo-tech</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="一、目前可以用的现成库"><a href="#一、目前可以用的现成库" class="headerlink" title="一、目前可以用的现成库"></a>一、目前可以用的现成库</h2><table>
+<thead>
+<tr>
+<th>功能</th>
+<th align="center">forever</th>
+<th align="center">nodemon</th>
+<th align="center">pm2</th>
+<th align="center">node-supervisor</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>后台</td>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">×</td>
+</tr>
+<tr>
+<td>日志</td>
+<td align="center">√</td>
+<td align="center">×</td>
+<td align="center">√</td>
+<td align="center">×</td>
+</tr>
+<tr>
+<td>热重载</td>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td>监控</td>
+<td align="center">×</td>
+<td align="center">×</td>
+<td align="center">√</td>
+<td align="center">×</td>
+</tr>
+<tr>
+<td>集群</td>
+<td align="center">×</td>
+<td align="center">×</td>
+<td align="center">√</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>推荐用 forever，相比 pm2，少了 cluster 功能，负载均衡这一块需要交给运维自己配。</p>
+<h2 id="二、基于-egg-cluster-的移植方案"><a href="#二、基于-egg-cluster-的移植方案" class="headerlink" title="二、基于 egg-cluster 的移植方案"></a>二、基于 egg-cluster 的移植方案</h2><p>阿里的后端框架 egg.js 的进程管理没有选型 pm2，而是自己开发了一套多进程模型，叫 egg-cluster。其支持：</p>
+<ol>
+<li>多进程模型和进程间通讯</li>
+<li>完整进程守护</li>
+<li>增强的集群功能</li>
+</ol>
+<p>但其不支持监控。<br>拉代码试跑了一下，这套方案和他们的 egg.js 框架强绑定，想把进程管理的相关逻辑单独分离出来，需要花费时间，下午研究了大约 3 小时，暂未找到头<br>绪。</p>
+<h2 id="三、使用-linux-提供的系统命令"><a href="#三、使用-linux-提供的系统命令" class="headerlink" title="三、使用 linux 提供的系统命令"></a>三、使用 linux 提供的系统命令</h2><p>采用systemd管理进程，express官方文档推荐此方案。<br><a target="_blank" rel="noopener" href="https://www.axllent.org/docs/nodejs-service-with-systemd/">https://www.axllent.org/docs/nodejs-service-with-systemd/</a><br>这块是运维需要参与的地方，缺点是比较配置比较重，对开发来说学习成本高</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">トップ</a></li>
+        
+          <li><a href="/about/">プロフィール</a></li>
+        
+          <li><a href="/archives/">記事一覧</a></li>
+        
+          <li><a href="/tags/">タグ</a></li>
+        
+          <li><a href="/categories/">カテゴリ</a></li>
+        
+          <li><a href="/search/">探す</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%9B%AE%E5%89%8D%E5%8F%AF%E4%BB%A5%E7%94%A8%E7%9A%84%E7%8E%B0%E6%88%90%E5%BA%93"><span class="toc-number">1.</span> <span class="toc-text">一、目前可以用的现成库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%9F%BA%E4%BA%8E-egg-cluster-%E7%9A%84%E7%A7%BB%E6%A4%8D%E6%96%B9%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">二、基于 egg-cluster 的移植方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%BD%BF%E7%94%A8-linux-%E6%8F%90%E4%BE%9B%E7%9A%84%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4"><span class="toc-number">3.</span> <span class="toc-text">三、使用 linux 提供的系统命令</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html&text=pm2替代方案"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html&title=pm2替代方案"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html&is_video=false&description=pm2替代方案"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" href="mailto:?subject=pm2替代方案&body=Check out this article: https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html&title=pm2替代方案"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html&title=pm2替代方案"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html&title=pm2替代方案"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html&title=pm2替代方案"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html&name=pm2替代方案&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muneakira6.github.io/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html&t=pm2替代方案"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li> -->
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2025
+    Mune Akira
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">トップ</a></li><!--
+     --><!--
+       --><li><a href="/about/">プロフィール</a></li><!--
+     --><!--
+       --><li><a href="/archives/">記事一覧</a></li><!--
+     --><!--
+       --><li><a href="/tags/">タグ</a></li><!--
+     --><!--
+       --><li><a href="/categories/">カテゴリ</a></li><!--
+     --><!--
+       --><li><a href="/search/">探す</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

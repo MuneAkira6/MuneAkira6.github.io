@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang=ja>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NTYCDBHW7Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-NTYCDBHW7Q');
+
+  gtag('event', 'custom_event_test', {
+    category: 'test_category',
+    platform: 'web',
+  });
+</script>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <!-- <meta name="robots" content="noindex"> -->
+    <!-- <meta name="googlebot" content="noindex"> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="google-site-verification" content="Kd5i9xsNaiKCLKdHxNrx0RIUXBczfd2VxycDTU5Pp28" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="何为 foreverforever 可以看做是一个 nodejs 的守护进程，能够启动，停止，重启我们的 app 应用。 官方的说明是说：A simple CLI tool for ensuring that a given script runs continuously (i.e. forever).一个用来持续（或者说永远）运行一个给定脚本的简单的命令行工具 Github 地址：https:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="forever 使用教程">
+<meta property="og:url" content="https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html">
+<meta property="og:site_name" content="Henceforth 🌱　🍑　🐸">
+<meta property="og:description" content="何为 foreverforever 可以看做是一个 nodejs 的守护进程，能够启动，停止，重启我们的 app 应用。 官方的说明是说：A simple CLI tool for ensuring that a given script runs continuously (i.e. forever).一个用来持续（或者说永远）运行一个给定脚本的简单的命令行工具 Github 地址：https:">
+<meta property="og:locale" content="ja_JP">
+<meta property="article:published_time" content="2023-04-11T16:23:56.000Z">
+<meta property="article:modified_time" content="2025-08-26T06:29:49.372Z">
+<meta property="article:author" content="Mune Akira">
+<meta property="article:tag" content="Pseudo-tech">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/Image_ruby.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/Image_ruby.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/Image_ruby.png">
+        
+      
+    
+    <!-- title -->
+    <title>forever 使用教程</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="メニュー"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="メニュー"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="トップ" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">トップ</a></li><!--
+     --><!--
+       --><li><a href="/about/">プロフィール</a></li><!--
+     --><!--
+       --><li><a href="/archives/">記事一覧</a></li><!--
+     --><!--
+       --><li><a href="/tags/">タグ</a></li><!--
+     --><!--
+       --><li><a href="/categories/">カテゴリ</a></li><!--
+     --><!--
+       --><li><a href="/search/">探す</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="前へ" href="/Bible.html"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="次へ" href="/pm2%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88.html"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="シェア" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">前へ</span>
+      <span id="i-next" class="info" style="display:none;">次へ</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">シェア</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html&text=forever 使用教程"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html&title=forever 使用教程"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html&is_video=false&description=forever 使用教程"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" href="mailto:?subject=forever 使用教程&body=Check out this article: https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html&title=forever 使用教程"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html&title=forever 使用教程"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html&title=forever 使用教程"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html&title=forever 使用教程"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html&name=forever 使用教程&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html&t=forever 使用教程"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%95%E4%B8%BA-forever"><span class="toc-number">1.</span> <span class="toc-text">何为 forever</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#forever-%E7%94%A8%E9%80%94"><span class="toc-number">2.</span> <span class="toc-text">forever 用途</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-forever"><span class="toc-number">3.</span> <span class="toc-text">安装 forever</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-forever"><span class="toc-number">4.</span> <span class="toc-text">使用 forever</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E7%9B%B8%E5%85%B3"><span class="toc-number">4.1.</span> <span class="toc-text">启动相关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%9C%E6%AD%A2%E6%93%8D%E4%BD%9C"><span class="toc-number">4.2.</span> <span class="toc-text">停止操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%90%AF%E6%93%8D%E4%BD%9C"><span class="toc-number">4.3.</span> <span class="toc-text">重启操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#config-%E6%96%87%E4%BB%B6"><span class="toc-number">4.4.</span> <span class="toc-text">config 文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%92%8C-npm-start-%E6%90%AD%E9%85%8D"><span class="toc-number">5.</span> <span class="toc-text">和 npm start 搭配</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        forever 使用教程
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Mune Akira</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-04-11T16:23:56.000Z" class="dt-published" itemprop="datePublished">2023-04-12</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Tech/">Tech</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Pseudo-tech/" rel="tag">Pseudo-tech</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="何为-forever"><a href="#何为-forever" class="headerlink" title="何为 forever"></a>何为 forever</h2><p>forever 可以看做是一个 nodejs 的守护进程，能够启动，停止，重启我们的 app 应用。</p>
+<p>官方的说明是说：<br>A simple CLI tool for ensuring that a given script runs continuously (i.e. forever).<br>一个用来持续（或者说永远）运行一个给定脚本的简单的命令行工具</p>
+<p>Github 地址：<a target="_blank" rel="noopener" href="https://github.com/nodejitsu/foreverbash">https://github.com/nodejitsu/foreverbash</a></p>
+<h2 id="forever-用途"><a href="#forever-用途" class="headerlink" title="forever 用途"></a>forever 用途</h2><p>forever 的用途就是帮我们更好的管理我们 node App 服务，本质上就是在 forever 进程之下，创建一个 node app 的子进程。<br>比如，你有一个基于 express 应用，那么它将会很方便你更新和操作你的服务，并且保证你服务能持续运行。<br>更好的一点就是每次更改文件，它都可以帮你自动重启服务而不需要手动重启。</p>
+<h2 id="安装-forever"><a href="#安装-forever" class="headerlink" title="安装 forever"></a>安装 forever</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install forever -g</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-forever"><a href="#使用-forever" class="headerlink" title="使用 forever"></a>使用 forever</h2><h3 id="启动相关"><a href="#启动相关" class="headerlink" title="启动相关"></a>启动相关</h3><p>简单的启动，其实就是 node app.js，forever start 默认会调用系统的 node</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forever start app.js</span><br></pre></td></tr></table></figure>
+
+<p>指定 forever 信息输出文件，当然，默认它会放到~&#x2F;.forever&#x2F;forever.log</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forever start -l forever.log app.js</span><br></pre></td></tr></table></figure>
+
+<p>指定 app.js 中的日志信息和错误日志输出文件<br>-o 就是 console.log 输出的信息，-e 就是 console.error 输出的信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forever start -o out.log -e err.log app.js</span><br></pre></td></tr></table></figure>
+
+<p>追加日志，forever 默认是不能覆盖上次的启动日志，<br>所以如果第二次启动不加-a，则会不让运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forever start -l forever.log -a app.js</span><br></pre></td></tr></table></figure>
+
+<p>监听当前文件夹下的所有文件改动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forever start -w app.js</span><br></pre></td></tr></table></figure>
+
+<p>文件改动监听并自动重启</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forever start -w app.js</span><br></pre></td></tr></table></figure>
+
+<p>显示所有运行的服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forever list</span><br></pre></td></tr></table></figure>
+
+<h3 id="停止操作"><a href="#停止操作" class="headerlink" title="停止操作"></a>停止操作</h3><p>停止其中一个 node App</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forever stop app.js</span><br></pre></td></tr></table></figure>
+
+<p>当然还可以这样</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// forever list uid</span><br><span class="line">forever stop uid</span><br><span class="line">forever stopall</span><br></pre></td></tr></table></figure>
+
+<h3 id="重启操作"><a href="#重启操作" class="headerlink" title="重启操作"></a>重启操作</h3><p>重启操作跟停止操作保持一致。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">forever restart uid</span><br><span class="line">forever restartall</span><br></pre></td></tr></table></figure>
+
+<p>开发和线上建议配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">forever start -l forever.log -e err.log -a app.js</span><br><span class="line"></span><br><span class="line">forever start -l ~/.forever/forever.log -e ~/.forever/err.log -w -a app.js</span><br></pre></td></tr></table></figure>
+
+<h3 id="config-文件"><a href="#config-文件" class="headerlink" title="config 文件"></a>config 文件</h3><p>也可以通过 json 文件来配置<br>比如forever start -l forever.log -e err.log -a app.js改成配置文件是：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// config.json</span></span><br><span class="line"><span class="punctuation">[</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// App1</span></span><br><span class="line">    <span class="attr">&quot;uid&quot;</span><span class="punctuation">:</span> <span class="string">&quot;app&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;append&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span> <span class="comment">// -a</span></span><br><span class="line">    <span class="attr">&quot;watch&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span> <span class="comment">// -w</span></span><br><span class="line">    <span class="attr">&quot;script&quot;</span><span class="punctuation">:</span> <span class="string">&quot;app.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;sourceDir&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/path/of/app&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;logFile&quot;</span><span class="punctuation">:</span> <span class="string">&quot;forever.log&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;errFile&quot;</span><span class="punctuation">:</span> <span class="string">&quot;error.log&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// App2</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<p>使用 forever start 启动这个 json 文件即可。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forever start ./forever/config.json</span><br></pre></td></tr></table></figure>
+
+<h2 id="和-npm-start-搭配"><a href="#和-npm-start-搭配" class="headerlink" title="和 npm start 搭配"></a>和 npm start 搭配</h2><p>有时我们的服务使用 npm start 起的，forever start 默认只支持 node，怎么办呢？<br>像下面这样写，&#x2F;path&#x2F;to&#x2F;app&#x2F;dir&#x2F; 就是你打算执行 npm start 的目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forever start -c <span class="string">&quot;npm start&quot;</span> /path/to/app/dir/</span><br></pre></td></tr></table></figure>
+
+<p>但这个命令偶尔会报错，报 cannot find package.json…，遇到这种情况的话推荐另一种方式：</p>
+<ol>
+<li>cd到项目路径下</li>
+<li>查看 package.json，查找 scripts 里面的命令。</li>
+<li>比如你原来的项目是用 npm start:prod 起的，查看项目的 package.json，长这样：</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="string">&quot;start:prod&quot;</span>: <span class="string">&quot;export NODE_ENV=&#x27;production&#x27; &amp;&amp; pm2 start dist/main.js --name anno&quot;</span>,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>那么实际你输入 npm start:prod 的时候，它实际执行的是后面那一串命令。我们可以参照这串命令，在终端输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> NODE_ENV=<span class="string">&#x27;production&#x27;</span> &amp;&amp; forever start dist/main.js</span><br></pre></td></tr></table></figure>
+
+<p>还有的package.json更简单：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="string">&quot;start&quot;</span>: <span class="string">&quot;node bin/start.js&quot;</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>那么就写成：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forever start bin/start.js</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">トップ</a></li>
+        
+          <li><a href="/about/">プロフィール</a></li>
+        
+          <li><a href="/archives/">記事一覧</a></li>
+        
+          <li><a href="/tags/">タグ</a></li>
+        
+          <li><a href="/categories/">カテゴリ</a></li>
+        
+          <li><a href="/search/">探す</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%95%E4%B8%BA-forever"><span class="toc-number">1.</span> <span class="toc-text">何为 forever</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#forever-%E7%94%A8%E9%80%94"><span class="toc-number">2.</span> <span class="toc-text">forever 用途</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-forever"><span class="toc-number">3.</span> <span class="toc-text">安装 forever</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-forever"><span class="toc-number">4.</span> <span class="toc-text">使用 forever</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E7%9B%B8%E5%85%B3"><span class="toc-number">4.1.</span> <span class="toc-text">启动相关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%9C%E6%AD%A2%E6%93%8D%E4%BD%9C"><span class="toc-number">4.2.</span> <span class="toc-text">停止操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%90%AF%E6%93%8D%E4%BD%9C"><span class="toc-number">4.3.</span> <span class="toc-text">重启操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#config-%E6%96%87%E4%BB%B6"><span class="toc-number">4.4.</span> <span class="toc-text">config 文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%92%8C-npm-start-%E6%90%AD%E9%85%8D"><span class="toc-number">5.</span> <span class="toc-text">和 npm start 搭配</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html&text=forever 使用教程"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html&title=forever 使用教程"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html&is_video=false&description=forever 使用教程"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" href="mailto:?subject=forever 使用教程&body=Check out this article: https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html&title=forever 使用教程"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html&title=forever 使用教程"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html&title=forever 使用教程"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html&title=forever 使用教程"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html&name=forever 使用教程&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muneakira6.github.io/forever%20%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.html&t=forever 使用教程"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li> -->
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2025
+    Mune Akira
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">トップ</a></li><!--
+     --><!--
+       --><li><a href="/about/">プロフィール</a></li><!--
+     --><!--
+       --><li><a href="/archives/">記事一覧</a></li><!--
+     --><!--
+       --><li><a href="/tags/">タグ</a></li><!--
+     --><!--
+       --><li><a href="/categories/">カテゴリ</a></li><!--
+     --><!--
+       --><li><a href="/search/">探す</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

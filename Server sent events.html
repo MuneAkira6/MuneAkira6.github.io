@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang=ja>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NTYCDBHW7Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-NTYCDBHW7Q');
+
+  gtag('event', 'custom_event_test', {
+    category: 'test_category',
+    platform: 'web',
+  });
+</script>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <!-- <meta name="robots" content="noindex"> -->
+    <!-- <meta name="googlebot" content="noindex"> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="google-site-verification" content="Kd5i9xsNaiKCLKdHxNrx0RIUXBczfd2VxycDTU5Pp28" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="介绍服务器向浏览器推送信息，除了 WebSocket，还有一种方法：Server-Sent Events（以下简称 SSE）。 严格地说，HTTP 协议无法做到服务器主动推送信息。但是，有一种变通方法，就是服务器向客户端声明，接下来要发送的是流信息（streaming）。也就是说，发送的不是一次性的数据包，而是一个数据流，会连续不断地发送过来。这时客户端不会关闭连接，会一直等着服务器发过来的新的数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Server-Sent Events教程">
+<meta property="og:url" content="https://muneakira6.github.io/Server%20sent%20events.html">
+<meta property="og:site_name" content="Henceforth 🌱　🍑　🐸">
+<meta property="og:description" content="介绍服务器向浏览器推送信息，除了 WebSocket，还有一种方法：Server-Sent Events（以下简称 SSE）。 严格地说，HTTP 协议无法做到服务器主动推送信息。但是，有一种变通方法，就是服务器向客户端声明，接下来要发送的是流信息（streaming）。也就是说，发送的不是一次性的数据包，而是一个数据流，会连续不断地发送过来。这时客户端不会关闭连接，会一直等着服务器发过来的新的数">
+<meta property="og:locale" content="ja_JP">
+<meta property="article:published_time" content="2024-08-11T16:23:56.000Z">
+<meta property="article:modified_time" content="2025-08-26T06:38:31.205Z">
+<meta property="article:author" content="Mune Akira">
+<meta property="article:tag" content="Pseudo-tech">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/Image_ruby.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/Image_ruby.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/Image_ruby.png">
+        
+      
+    
+    <!-- title -->
+    <title>Server-Sent Events教程</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="メニュー"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="メニュー"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="トップ" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">トップ</a></li><!--
+     --><!--
+       --><li><a href="/about/">プロフィール</a></li><!--
+     --><!--
+       --><li><a href="/archives/">記事一覧</a></li><!--
+     --><!--
+       --><li><a href="/tags/">タグ</a></li><!--
+     --><!--
+       --><li><a href="/categories/">カテゴリ</a></li><!--
+     --><!--
+       --><li><a href="/search/">探す</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="前へ" href="/september_travel_2.html"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="次へ" href="/august_travel.html"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="シェア" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">前へ</span>
+      <span id="i-next" class="info" style="display:none;">次へ</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">シェア</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muneakira6.github.io/Server%20sent%20events.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muneakira6.github.io/Server%20sent%20events.html&text=Server-Sent Events教程"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muneakira6.github.io/Server%20sent%20events.html&title=Server-Sent Events教程"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muneakira6.github.io/Server%20sent%20events.html&is_video=false&description=Server-Sent Events教程"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" href="mailto:?subject=Server-Sent Events教程&body=Check out this article: https://muneakira6.github.io/Server%20sent%20events.html"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muneakira6.github.io/Server%20sent%20events.html&title=Server-Sent Events教程"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muneakira6.github.io/Server%20sent%20events.html&title=Server-Sent Events教程"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muneakira6.github.io/Server%20sent%20events.html&title=Server-Sent Events教程"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muneakira6.github.io/Server%20sent%20events.html&title=Server-Sent Events教程"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muneakira6.github.io/Server%20sent%20events.html&name=Server-Sent Events教程&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muneakira6.github.io/Server%20sent%20events.html&t=Server-Sent Events教程"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSE-%E4%B8%8E-WebSocket"><span class="toc-number">2.</span> <span class="toc-text">SSE 与 WebSocket</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9"><span class="toc-number">2.1.</span> <span class="toc-text">优点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8-API"><span class="toc-number">3.</span> <span class="toc-text">服务器 API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">3.1.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8-API"><span class="toc-number">4.</span> <span class="toc-text">浏览器 API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#EventSource-%E5%AF%B9%E8%B1%A1"><span class="toc-number">4.1.</span> <span class="toc-text">EventSource 对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%94%9F-EventSource-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number">5.</span> <span class="toc-text">原生 EventSource 的缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E-fetch-%E6%94%B9%E9%80%A0"><span class="toc-number">6.</span> <span class="toc-text">基于 fetch 改造</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Server-Sent Events教程
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Mune Akira</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-08-11T16:23:56.000Z" class="dt-published" itemprop="datePublished">2024-08-12</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Tech/">Tech</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Pseudo-tech/" rel="tag">Pseudo-tech</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>服务器向浏览器推送信息，除了 WebSocket，还有一种方法：Server-Sent Events（以下简称 SSE）。</p>
+<p>严格地说，HTTP 协议无法做到服务器主动推送信息。但是，有一种变通方法，就是服务器向客户端声明，接下来要发送的是流信息（streaming）。也就是说，发送的不是一次性的数据包，而是一个数据流，会连续不断地发送过来。这时客户端不会关闭连接，会一直等着服务器发过来的新的数据流，文件下载就是基于这种原理。</p>
+<p>SSE 就是利用这种机制，使用流信息向浏览器推送信息。它基于 HTTP 协议，目前除了 IE&#x2F;Legacy Edge，其他浏览器都支持。</p>
+<h2 id="SSE-与-WebSocket"><a href="#SSE-与-WebSocket" class="headerlink" title="SSE 与 WebSocket"></a>SSE 与 WebSocket</h2><p>SSE 与 WebSocket 作用相似，都是建立浏览器与服务器之间的通信渠道，然后服务器向浏览器推送信息。</p>
+<ul>
+<li><strong>WebSocket</strong>: 全双工通道，可以双向通信。</li>
+<li><strong>SSE</strong>: 单向通道，只能服务器向浏览器发送，因为流信息本质上就是下载。如果浏览器向服务器发送信息，就变成另一次 HTTP 请求。</li>
+</ul>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ol>
+<li>SSE 使用 HTTP 协议，现有的服务器软件都支持。WebSocket 是一个独立协议，可能存在无法升级的情况。</li>
+<li>SSE 属于轻量级，使用简单；WebSocket 协议相对复杂。</li>
+<li>SSE 默认支持断线重连，WebSocket 需要自己实现。</li>
+</ol>
+<h2 id="服务器-API"><a href="#服务器-API" class="headerlink" title="服务器 API"></a>服务器 API</h2><ol>
+<li>指定响应头</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Content-Type: text/event-stream</span><br><span class="line">Cache-Control: no-cache</span><br><span class="line">Connection: keep-alive</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>每次发送一个数据包，每个数据包之间用 <code>\n\n</code> 分隔，一个数据包内部由若干行文本组成，每行的格式是：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">field: value\n</span><br></pre></td></tr></table></figure>
+
+<p>field 的取值可以是：<code>data</code>、<code>event</code>、<code>retry</code>、<code>id</code></p>
+<ul>
+<li><strong>data</strong>: 表示传输的数据</li>
+<li><strong>event</strong>: 表示下一行 data 将触发的 client 的事件名，不指定则触发 <code>message</code> 事件</li>
+<li><strong>retry</strong>: 意外断连后重连的时间间隔</li>
+<li><strong>id</strong>: 数据标识符，用于在意外断连时，浏览器会自动在请求头中加上 <code>Last-Event-ID</code>，帮助服务器重建连接</li>
+</ul>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">retry: 10000\n\n</span><br><span class="line"></span><br><span class="line">event: connectTime\n</span><br><span class="line">data: Connection open…\n\n</span><br><span class="line"></span><br><span class="line">data: Hello World!\n\n</span><br><span class="line"></span><br><span class="line">: This is a comment\n\n</span><br></pre></td></tr></table></figure>
+
+<h2 id="浏览器-API"><a href="#浏览器-API" class="headerlink" title="浏览器 API"></a>浏览器 API</h2><h3 id="EventSource-对象"><a href="#EventSource-对象" class="headerlink" title="EventSource 对象"></a>EventSource 对象</h3><ol>
+<li>实例化</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> source = <span class="keyword">new</span> <span class="title class_">EventSource</span>(url, &#123; <span class="attr">withCredentials</span>: <span class="literal">true</span> &#125;);</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>获取连接的状态</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">source.<span class="property">readyState</span>;</span><br><span class="line"><span class="comment">// 0 CONNECTING</span></span><br><span class="line"><span class="comment">// 1 OPEN</span></span><br><span class="line"><span class="comment">// 2 CLOSED</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>监听事件</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">source.<span class="property">onopen</span>;</span><br><span class="line">source.<span class="property">onmessage</span>;</span><br><span class="line">source.<span class="property">onerror</span>;</span><br><span class="line"><span class="comment">// 其他自定义事件…</span></span><br><span class="line">source.<span class="title function_">close</span>();</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>demo</li>
+</ol>
+<h2 id="原生-EventSource-的缺点"><a href="#原生-EventSource-的缺点" class="headerlink" title="原生 EventSource 的缺点"></a>原生 EventSource 的缺点</h2><ol>
+<li>只支持发 GET 请求</li>
+<li>MS 系浏览器（IE、legacy Edge）不支持</li>
+</ol>
+<h2 id="基于-fetch-改造"><a href="#基于-fetch-改造" class="headerlink" title="基于 fetch 改造"></a>基于 fetch 改造</h2><ol>
+<li>使用 fetch API 流式处理请求</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Chrome 95+</span></span><br><span class="line"><span class="keyword">const</span> reader = response.<span class="property">body</span>.<span class="title function_">pipeThrough</span>(<span class="keyword">new</span> <span class="title class_">TextDecoderStream</span>()).<span class="title function_">getReader</span>();</span><br><span class="line"><span class="keyword">await</span> reader.<span class="title function_">read</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Chrome 95-</span></span><br><span class="line"><span class="keyword">const</span> reader = response.<span class="property">body</span>.<span class="title function_">getReader</span>();</span><br><span class="line"><span class="keyword">const</span> textDecoder = <span class="keyword">new</span> <span class="title class_">TextDecoder</span>();</span><br><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> reader.<span class="title function_">read</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> str = <span class="string">&quot;&quot;</span>;</span><br><span class="line">str += textDecoder.<span class="title function_">decode</span>(result.<span class="property">value</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// IE</span></span><br><span class="line"><span class="comment">// 取出本段数据（二进制格式）</span></span><br><span class="line"><span class="keyword">var</span> chunk = value;</span><br><span class="line"><span class="keyword">var</span> str = <span class="string">&quot;&quot;</span>;</span><br><span class="line"><span class="comment">// 假定数据是UTF-8编码，前三字节是数据头，而且每个字符占据一个字节（即都为英文字符）</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">3</span>; i &lt; chunk.<span class="property">byteLength</span>; i++) &#123;</span><br><span class="line">  str += <span class="title class_">String</span>.<span class="title function_">fromCharCode</span>(chunk[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>参照原生，手动解析响应的 body（demo）</li>
+</ol>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Azure/fetch-event-source">https://github.com/Azure/fetch-event-source</a></li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">トップ</a></li>
+        
+          <li><a href="/about/">プロフィール</a></li>
+        
+          <li><a href="/archives/">記事一覧</a></li>
+        
+          <li><a href="/tags/">タグ</a></li>
+        
+          <li><a href="/categories/">カテゴリ</a></li>
+        
+          <li><a href="/search/">探す</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSE-%E4%B8%8E-WebSocket"><span class="toc-number">2.</span> <span class="toc-text">SSE 与 WebSocket</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9"><span class="toc-number">2.1.</span> <span class="toc-text">优点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8-API"><span class="toc-number">3.</span> <span class="toc-text">服务器 API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">3.1.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8-API"><span class="toc-number">4.</span> <span class="toc-text">浏览器 API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#EventSource-%E5%AF%B9%E8%B1%A1"><span class="toc-number">4.1.</span> <span class="toc-text">EventSource 对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%94%9F-EventSource-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number">5.</span> <span class="toc-text">原生 EventSource 的缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E-fetch-%E6%94%B9%E9%80%A0"><span class="toc-number">6.</span> <span class="toc-text">基于 fetch 改造</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://muneakira6.github.io/Server%20sent%20events.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://muneakira6.github.io/Server%20sent%20events.html&text=Server-Sent Events教程"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://muneakira6.github.io/Server%20sent%20events.html&title=Server-Sent Events教程"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://muneakira6.github.io/Server%20sent%20events.html&is_video=false&description=Server-Sent Events教程"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" href="mailto:?subject=Server-Sent Events教程&body=Check out this article: https://muneakira6.github.io/Server%20sent%20events.html"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://muneakira6.github.io/Server%20sent%20events.html&title=Server-Sent Events教程"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://muneakira6.github.io/Server%20sent%20events.html&title=Server-Sent Events教程"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://muneakira6.github.io/Server%20sent%20events.html&title=Server-Sent Events教程"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://muneakira6.github.io/Server%20sent%20events.html&title=Server-Sent Events教程"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://muneakira6.github.io/Server%20sent%20events.html&name=Server-Sent Events教程&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://muneakira6.github.io/Server%20sent%20events.html&t=Server-Sent Events教程"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li> -->
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2025
+    Mune Akira
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">トップ</a></li><!--
+     --><!--
+       --><li><a href="/about/">プロフィール</a></li><!--
+     --><!--
+       --><li><a href="/archives/">記事一覧</a></li><!--
+     --><!--
+       --><li><a href="/tags/">タグ</a></li><!--
+     --><!--
+       --><li><a href="/categories/">カテゴリ</a></li><!--
+     --><!--
+       --><li><a href="/search/">探す</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
