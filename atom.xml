@@ -191,6 +191,31 @@
   </entry>
   
   <entry>
+    <title>How to Play Gakumas(Gakuen Idol Master) on Mac</title>
+    <link href="https://muneakira6.github.io/gkmas_mac_en.html"/>
+    <id>https://muneakira6.github.io/gkmas_mac_en.html</id>
+    <published>2025-05-11T16:23:56.000Z</published>
+    <updated>2026-02-05T14:55:38.587Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;Introduction&quot;&gt;&lt;a href=&quot;#Introduction&quot; class=&quot;headerlink&quot; title=&quot;Introduction&quot;&gt;&lt;/a&gt;Introduction&lt;/h2&gt;&lt;p&gt;Gakumas（Gakuen Idol Master）</summary>
+        
+      
+    
+    
+    
+    <category term="Tech" scheme="https://muneakira6.github.io/categories/Tech/"/>
+    
+    
+    <category term="Pseudo-tech" scheme="https://muneakira6.github.io/tags/Pseudo-tech/"/>
+    
+  </entry>
+  
+  <entry>
     <title>console.log の代わりに Logpoints を使う話</title>
     <link href="https://muneakira6.github.io/logpoint.html"/>
     <id>https://muneakira6.github.io/logpoint.html</id>
@@ -506,31 +531,6 @@
     <category term="麻倉もも" scheme="https://muneakira6.github.io/tags/%E9%BA%BB%E5%80%89%E3%82%82%E3%82%82/"/>
     
     <category term="巡礼" scheme="https://muneakira6.github.io/tags/%E5%B7%A1%E7%A4%BC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Server-Sent Events教程</title>
-    <link href="https://muneakira6.github.io/Server%20sent%20events.html"/>
-    <id>https://muneakira6.github.io/Server%20sent%20events.html</id>
-    <published>2024-08-11T16:23:56.000Z</published>
-    <updated>2025-08-26T06:38:31.205Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h2&gt;&lt;p&gt;服务器向浏览器推送信息，除了 WebSocket，还有一种方法：Server-Sent Events（以下简称</summary>
-        
-      
-    
-    
-    
-    <category term="Tech" scheme="https://muneakira6.github.io/categories/Tech/"/>
-    
-    
-    <category term="Pseudo-tech" scheme="https://muneakira6.github.io/tags/Pseudo-tech/"/>
     
   </entry>
   

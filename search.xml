@@ -187,6 +187,31 @@
     
     
     <entry>
+      <title>How to Play Gakumas(Gakuen Idol Master) on Mac</title>
+      <link href="/gkmas_mac_en.html"/>
+      <url>/gkmas_mac_en.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Gakumas（Gakuen Idol Master） is originally an app for iOS &#x2F; Android, but there is a way to run it on a Mac.<br>Here, I will summarize the steps to install the IPA file on a Mac using <strong>Sideloady</strong> and actually run it, as well as the problems encountered and their solutions.</p><p>refs:</p><ul><li><a href="https://note.com/hoy0verse/n/n043bb3308a0d#5e54f119-c5eb-45a0-bc8f-00c03c283214">https://note.com/hoy0verse/n/n043bb3308a0d#5e54f119-c5eb-45a0-bc8f-00c03c283214</a></li><li><a href="https://misskey.io/notes/a5pvn728kcix0312">https://misskey.io/notes/a5pvn728kcix0312</a></li></ul><h2 id="Steps"><a href="#Steps" class="headerlink" title="Steps"></a>Steps</h2><p>You can mostly understand it by looking at the refs mentioned above.</p><h3 id="1-Install-Sideloady"><a href="#1-Install-Sideloady" class="headerlink" title="1. Install Sideloady"></a>1. Install Sideloady</h3><p>First, download and install <a href="https://sideloady.io/">Sideloady</a>.</p><h3 id="2-Download-Gakumas-IPA-file"><a href="#2-Download-Gakumas-IPA-file" class="headerlink" title="2. Download Gakumas IPA file"></a>2. Download Gakumas IPA file</h3><h3 id="3-Sideload"><a href="#3-Sideload" class="headerlink" title="3. Sideload"></a>3. Sideload</h3><h3 id="4-Launch"><a href="#4-Launch" class="headerlink" title="4. Launch!"></a>4. Launch!</h3><p>A problem occurred here. The login screen is normal, but when the download starts, the screen turns black. (This happens probably because it switches to landscape display)</p><h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>Inject this into the IPA.</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">key</span>&gt;</span>UISupportedInterfaceOrientations<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">array</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">string</span>&gt;</span>UIInterfaceOrientationPortrait<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">string</span>&gt;</span>UIInterfaceOrientationPortraitUpsideDown<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">string</span>&gt;</span>UIInterfaceOrientationLandscapeLeft<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">string</span>&gt;</span>UIInterfaceOrientationLandscapeRight<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">array</span>&gt;</span></span><br></pre></td></tr></table></figure><p>Sideload again.</p><p>If the screen turns black again, switching <code>View</code> -&gt; <code>Landscape</code>&#x2F;<code>Portrait</code> from the top left menu should fix it.</p><p><img src="https://imgur.com/lAah548.jpg"></p><h2 id="Issues"><a href="#Issues" class="headerlink" title="Issues"></a>Issues</h2><ul><li>Display resolution remains at iPad specifications</li><li>UI is slightly unnatural as it is not optimized for Mac</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Tech </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Pseudo-tech </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>console.log の代わりに Logpoints を使う話</title>
       <link href="/logpoint.html"/>
       <url>/logpoint.html</url>
