@@ -6,7 +6,7 @@
   <link href="https://muneakira6.github.io/atom.xml" rel="self"/>
   
   <link href="https://muneakira6.github.io/"/>
-  <updated>2026-08-05T11:42:16.599Z</updated>
+  <updated>2026-07-25T12:17:45.820Z</updated>
   <id>https://muneakira6.github.io/</id>
   
   <author>
@@ -15,60 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>声优观察：一个人怎么听出「谁在演」</title>
-    <link href="https://muneakira6.github.io/seiyuu_listening.html"/>
-    <id>https://muneakira6.github.io/seiyuu_listening.html</id>
-    <published>2026-08-05T12:30:00.000Z</published>
-    <updated>2026-08-05T11:42:16.599Z</updated>
-    
-    
-    <summary type="html">把这些年零散写下的声优杂感整理成一套自己的方法：从声线辨识、演技评价，到「声优 vs 艺人」的取舍，再到令和世代与個人番組时代的观察——聊聊一个只靠耳朵追下去的人，到底是怎么听出「谁在演」的。</summary>
-    
-    
-    
-    <category term="アニメ" scheme="https://muneakira6.github.io/categories/%E3%82%A2%E3%83%8B%E3%83%A1/"/>
-    
-    
-    <category term="アニメ" scheme="https://muneakira6.github.io/tags/%E3%82%A2%E3%83%8B%E3%83%A1/"/>
-    
-    <category term="声優" scheme="https://muneakira6.github.io/tags/%E5%A3%B0%E5%84%AA/"/>
-    
-    <category term="少女編号" scheme="https://muneakira6.github.io/tags/%E5%B0%91%E5%A5%B3%E7%B7%A8%E5%8F%B7/"/>
-    
-    <category term="それが声優！" scheme="https://muneakira6.github.io/tags/%E3%81%9D%E3%82%8C%E3%81%8C%E5%A3%B0%E5%84%AA%EF%BC%81/"/>
-    
-    <category term="学園アイドルマスター" scheme="https://muneakira6.github.io/tags/%E5%AD%A6%E5%9C%92%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>少女☆歌劇 レヴュースタァライト：符号的再演 —— 東京タワー、星摘みの塔、T 字型のポジションゼロ</title>
-    <link href="https://muneakira6.github.io/revue_starlight_symbols.html"/>
-    <id>https://muneakira6.github.io/revue_starlight_symbols.html</id>
-    <published>2026-08-05T11:10:00.000Z</published>
-    <updated>2026-08-05T10:58:29.667Z</updated>
-    
-    
-    <summary type="html">以「符号的再演」为主干，把 東京タワー、星摘みの塔、T 字型のポジションゼロ 三个反覆出现的视觉符号串成一条线，解读『劇場版 少女☆歌劇 レヴュースタァライト』如何用仪式的重复建立起一套神话，又如何亲手把它拆掉，让舞台少女走向下一个舞台。</summary>
-    
-    
-    
-    <category term="アニメ" scheme="https://muneakira6.github.io/categories/%E3%82%A2%E3%83%8B%E3%83%A1/"/>
-    
-    
-    <category term="アニメ" scheme="https://muneakira6.github.io/tags/%E3%82%A2%E3%83%8B%E3%83%A1/"/>
-    
-    <category term="百合" scheme="https://muneakira6.github.io/tags/%E7%99%BE%E5%90%88/"/>
-    
-    <category term="少女☆歌劇 レヴュースタァライト" scheme="https://muneakira6.github.io/tags/%E5%B0%91%E5%A5%B3%E2%98%86%E6%AD%8C%E5%8A%87-%E3%83%AC%E3%83%B4%E3%83%A5%E3%83%BC%E3%82%B9%E3%82%BF%E3%82%A1%E3%83%A9%E3%82%A4%E3%83%88/"/>
-    
-    <category term="レヴュースタァライト" scheme="https://muneakira6.github.io/tags/%E3%83%AC%E3%83%B4%E3%83%A5%E3%83%BC%E3%82%B9%E3%82%BF%E3%82%A1%E3%83%A9%E3%82%A4%E3%83%88/"/>
-    
-    <category term="舞台" scheme="https://muneakira6.github.io/tags/%E8%88%9E%E5%8F%B0/"/>
-    
-  </entry>
   
   <entry>
     <title>聊一聊我的赴日经历</title>
@@ -540,6 +486,59 @@
     
     
     <category term="Pseudo-tech" scheme="https://muneakira6.github.io/tags/Pseudo-tech/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>笔记：Tree Shaking</title>
+    <link href="https://muneakira6.github.io/treeshaking.html"/>
+    <id>https://muneakira6.github.io/treeshaking.html</id>
+    <published>2024-11-30T16:23:56.000Z</published>
+    <updated>2025-08-26T06:00:54.811Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Tree Shaking 的核心思想是：通过静态分析模块的导入&amp;#x2F;导出关系，找出那些从未被实际使用的代码，并在最终产物中将其删除，从而减小打包体积、提升性能。&lt;br&gt;这个概念最早由 Rollup 推出，随后 Webpack 在 2.0</summary>
+        
+      
+    
+    
+    
+    <category term="Tech" scheme="https://muneakira6.github.io/categories/Tech/"/>
+    
+    
+    <category term="Pseudo-tech" scheme="https://muneakira6.github.io/tags/Pseudo-tech/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>随感</title>
+    <link href="https://muneakira6.github.io/%E6%9D%82%E8%AE%B0.html"/>
+    <id>https://muneakira6.github.io/%E6%9D%82%E8%AE%B0.html</id>
+    <published>2024-11-10T15:23:56.000Z</published>
+    <updated>2025-05-25T07:31:38.668Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;因我什么时候软弱，什么时候就刚强了。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;11-6&quot;&gt;&lt;a href=&quot;#11-6&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Others" scheme="https://muneakira6.github.io/categories/Others/"/>
+    
+    
+    <category term="Bible" scheme="https://muneakira6.github.io/tags/Bible/"/>
     
   </entry>
   
