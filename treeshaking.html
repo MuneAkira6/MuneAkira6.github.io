@@ -29,7 +29,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://muneakira6.github.io/images/Image_ruby.jpg">
     
-    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://muneakira6.github.io/#website","url":"https://muneakira6.github.io/","name":"Henceforth 🌱　🍑　🐸","alternateName":"Henceforth","description":"I wrote these things in my dreams.","inLanguage":"ja","author":{"@id":"https://muneakira6.github.io/about/#person"},"publisher":{"@id":"https://muneakira6.github.io/#publisher"}},{"@type":"Organization","@id":"https://muneakira6.github.io/#publisher","name":"Henceforth 🌱　🍑　🐸","alternateName":"Henceforth","url":"https://muneakira6.github.io/","founder":{"@id":"https://muneakira6.github.io/about/#person"},"logo":{"@type":"ImageObject","url":"https://muneakira6.github.io/images/Image_ruby.jpg"}},{"@type":"Person","@id":"https://muneakira6.github.io/about/#person","name":"Mune Akira","url":"https://muneakira6.github.io/about/","sameAs":["https://github.com/MuneAkira6"]},{"@type":"BlogPosting","@id":"https://muneakira6.github.io/treeshaking.html#article","mainEntityOfPage":{"@type":"WebPage","@id":"https://muneakira6.github.io/treeshaking.html"},"url":"https://muneakira6.github.io/treeshaking.html","headline":"笔记：Tree Shaking","description":"Tree Shaking 笔记：为什么必须依赖 ES Modules 的静态可分析性、如何在 Webpack 中启用，以及 FlagDependencyExportsPlugin 等背后的实现原理。","inLanguage":"zh-CN","datePublished":"2024-11-30T16:23:56.000Z","dateModified":"2025-08-26T06:03:19.000Z","author":{"@id":"https://muneakira6.github.io/about/#person"},"publisher":{"@id":"https://muneakira6.github.io/#publisher"},"isPartOf":{"@id":"https://muneakira6.github.io/#website"},"keywords":["Pseudo-tech"],"wordCount":2269},{"@type":"BreadcrumbList","@id":"https://muneakira6.github.io/treeshaking.html#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Henceforth 🌱　🍑　🐸","item":"https://muneakira6.github.io/"},{"@type":"ListItem","position":2,"name":"Tech","item":"https://muneakira6.github.io/categories/Tech/"},{"@type":"ListItem","position":3,"name":"笔记：Tree Shaking","item":"https://muneakira6.github.io/treeshaking.html"}]}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://muneakira6.github.io/#website","url":"https://muneakira6.github.io/","name":"Henceforth 🌱　🍑　🐸","alternateName":"Henceforth","description":"東京で働くエンジニア Mune Akira の個人ブログ。在日外国人としての転職・銀行口座・クレジットカードなどの日本生活記録、麻倉もも・MyGO!!!!! の聖地巡礼とライブ遠征記、JavaScript / React の技術メモを日本語・中文・English で書いています。","inLanguage":["ja","zh-CN","en"],"author":{"@id":"https://muneakira6.github.io/about/#person"},"publisher":{"@id":"https://muneakira6.github.io/about/#person"}},{"@type":"Person","@id":"https://muneakira6.github.io/about/#person","name":"Mune Akira","url":"https://muneakira6.github.io/about/","description":"推しを見るために日本へ転職してきたエンジニア。東京で働きながら、日本生活・聖地巡礼・ライブ遠征の記録とフロントエンド開発のメモを書いている。","image":"https://i.imgur.com/AqiOKn3.jpg","knowsAbout":["在日外国人の日本生活","日本での転職","聖地巡礼","麻倉もも","MyGO!!!!!","JavaScript","React"],"knowsLanguage":["ja","zh-CN","en"],"sameAs":["https://github.com/MuneAkira6"]},{"@type":"BlogPosting","@id":"https://muneakira6.github.io/treeshaking.html#article","mainEntityOfPage":{"@type":"WebPage","@id":"https://muneakira6.github.io/treeshaking.html"},"url":"https://muneakira6.github.io/treeshaking.html","headline":"笔记：Tree Shaking","description":"Tree Shaking 笔记：为什么必须依赖 ES Modules 的静态可分析性、如何在 Webpack 中启用，以及 FlagDependencyExportsPlugin 等背后的实现原理。","inLanguage":"zh-CN","datePublished":"2024-11-30T16:23:56.000Z","dateModified":"2025-08-26T06:03:19.000Z","author":{"@id":"https://muneakira6.github.io/about/#person"},"publisher":{"@id":"https://muneakira6.github.io/about/#person"},"isPartOf":{"@id":"https://muneakira6.github.io/#website"},"keywords":["Pseudo-tech"],"wordCount":2269},{"@type":"BreadcrumbList","@id":"https://muneakira6.github.io/treeshaking.html#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Henceforth 🌱　🍑　🐸","item":"https://muneakira6.github.io/"},{"@type":"ListItem","position":2,"name":"Tech","item":"https://muneakira6.github.io/categories/Tech/"},{"@type":"ListItem","position":3,"name":"笔记：Tree Shaking","item":"https://muneakira6.github.io/treeshaking.html"}]}]}</script>
     
       
         
@@ -151,23 +151,29 @@
     
     <div class="content index py4 ">
         
-        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+        <article class="post h-entry">
   <header>
     
-    <h1 class="posttitle p-name" itemprop="name headline">
+    <h1 class="posttitle p-name">
         笔记：Tree Shaking
     </h1>
 
 
 
     <div class="meta">
-      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span class="p-name" itemprop="name">Mune Akira</span>
+      <span class="author p-author h-card">
+        
+        
+        <a class="p-name u-url" href="/about/" rel="author">Mune Akira</a>
+        
       </span>
       
     <div class="postdate">
       
-        <time datetime="2024-11-30T16:23:56.000Z" class="dt-published" itemprop="datePublished">2024-12-01</time>
+        <time datetime="2024-11-30T16:23:56.000Z" class="dt-published">2024-12-01</time>
+        
+        
+        (更新: <time datetime="2025-08-26T06:03:19.000Z" class="dt-updated">2025-08-26</time>)
         
       
     </div>
@@ -191,7 +197,7 @@
   </header>
   
 
-  <div class="content e-content" itemprop="articleBody">
+  <div class="content e-content">
     <p>Tree Shaking 的核心思想是：通过静态分析模块的导入&#x2F;导出关系，找出那些从未被实际使用的代码，并在最终产物中将其删除，从而减小打包体积、提升性能。<br>这个概念最早由 Rollup 推出，随后 Webpack 在 2.0 版本开始支持，如今已经是几乎所有构建工具的标配。</p>
 <h2 id="为什么必须依赖-ES-Modules？"><a href="#为什么必须依赖-ES-Modules？" class="headerlink" title="为什么必须依赖 ES Modules？"></a>为什么必须依赖 ES Modules？</h2><p>Tree Shaking 的前提是 <strong>静态可分析性</strong>。<br>CommonJS 的 <code>require</code> 过于灵活（可以在运行时拼接路径、条件加载），构建工具无法在编译阶段完整确定模块依赖，因此无法精确删除未使用的代码。相比之下，ES Modules 的 import&#x2F;export 语法必须写在顶层，路径是字符串字面量，这让依赖关系在构建阶段就能完全确定。</p>
 <p>举个例子：</p>
